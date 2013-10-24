@@ -3,6 +3,8 @@
 
     <string name="app_name">CardGames</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
+    
+    <string name="launch_game_activity">Game Activity</string>
+    <string name="title_activity_game">GameActivity</string>
 
 </resources>
