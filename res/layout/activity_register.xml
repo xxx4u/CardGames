@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/registerTitle"
+            android:id="@+id/registerTitle"
+            android:layout_gravity="center"
+            android:singleLine="true"
+            android:textSize="@dimen/titleTextSize"
+            android:layout_marginBottom="@dimen/titleBottomMargin"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/registerFirstname"
+            android:id="@+id/registerFirstnameLabel"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginLeft="@dimen/formLabelLeftMargin"/>
+
+    <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/registerFirstname"
+            android:inputType="text"
+            android:layout_marginBottom="@dimen/formWidgetBottomMargin"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/registerLastname"
+            android:id="@+id/registerLastnameLabel"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginLeft="@dimen/formLabelLeftMargin"/>
+
+    <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/registerLastname"
+            android:inputType="text"
+            android:layout_marginBottom="@dimen/formWidgetBottomMargin"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/registerEmail"
+            android:id="@+id/registerEmailLabel"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginLeft="@dimen/formLabelLeftMargin"/>
+
+    <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/registerEmail"
+            android:inputType="textEmailAddress"
+            android:layout_marginBottom="@dimen/formWidgetBottomMargin"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/registerPassword"
+            android:id="@+id/registerPasswordLabel"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginLeft="@dimen/formLabelLeftMargin"/>
+
+    <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/registerPassword"
+            android:inputType="textPassword"
+            android:layout_marginBottom="@dimen/formWidgetBottomMargin"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/registerPasswordConfirm"
+            android:id="@+id/registerPasswordConfirmLabel"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginLeft="@dimen/formLabelLeftMargin"/>
+
+    <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/registerPasswordConfirm"
+            android:inputType="textPassword"
+            android:layout_marginBottom="@dimen/formWidgetBottomMargin"/>
+
+    <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/registerSubmitButton"
+            android:id="@+id/registerSubmitButton"/>
+
+</LinearLayout>

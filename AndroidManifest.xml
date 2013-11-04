@@ -8,16 +8,16 @@
 
     <uses-sdk
         android:minSdkVersion="14"
-        android:targetSdkVersion="17" />
+        android:targetSdkVersion="14" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
+        android:label="@string/appName"
         android:theme="@style/AppTheme" >
         <activity
             android:name="android.otasyn.cardgames.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/appName" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,8 +26,12 @@
         </activity>
         <activity
             android:name="android.otasyn.cardgames.GameActivity"
-            android:label="@string/title_activity_game" >
+            android:label="@string/titleActivityGame" >
         </activity>
+        <activity android:name=".manage.account.activity.LoginActivity"/>
+        <activity android:name=".manage.account.activity.RegisterActivity"/>
+        <activity android:name=".manage.account.activity.FriendsListActivity"/>
+        <activity android:name=".manage.account.activity.GamesListActivity"/>
     </application>
 
 </manifest>

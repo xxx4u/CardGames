@@ -1,27 +1,27 @@
 /**
  * Patrick John Haskins
+ * Zachary Evans
  * CS7020 - Term Project
  */
 package android.otasyn.cardgames;
-
-import java.util.List;
-import java.util.Map;
-
-import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
-import com.firebase.client.ValueEventListener;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.PointF;
 import android.graphics.Paint.Cap;
 import android.graphics.Paint.Style;
+import android.graphics.Path;
+import android.graphics.PointF;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.ValueEventListener;
+
+import java.util.List;
+import java.util.Map;
 
 public class GameView extends View {
 

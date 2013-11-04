@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/loginTitle"
+            android:id="@+id/loginTitle"
+            android:layout_gravity="center"
+            android:singleLine="true"
+            android:textSize="@dimen/titleTextSize"
+            android:layout_marginBottom="@dimen/titleBottomMargin"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/loginEmail"
+            android:id="@+id/loginEmailLabel"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginLeft="@dimen/formLabelLeftMargin"/>
+
+    <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/loginEmail"
+            android:inputType="textEmailAddress"
+            android:layout_marginBottom="@dimen/formWidgetBottomMargin"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/loginPassword"
+            android:id="@+id/loginPasswordLabel"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginLeft="@dimen/formLabelLeftMargin"/>
+
+    <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/loginPassword"
+            android:inputType="textPassword"
+            android:layout_marginBottom="@dimen/formWidgetBottomMargin"/>
+
+    <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/loginSubmitButton"
+            android:id="@+id/loginSubmitButton"/>
+
+</LinearLayout>
