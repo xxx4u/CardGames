@@ -18,7 +18,6 @@ import android.otasyn.cardgames.manage.account.dto.SimpleUser;
 import android.otasyn.cardgames.utility.DateUtility;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 public class GamesListActivity extends Activity {
 
@@ -26,7 +25,7 @@ public class GamesListActivity extends Activity {
         SimpleUser user = null;
         try {
             user = new CurrentUserTask().execute().get();
-        } catch (InterruptedException | ExecutionException e) { }
+        } catch (Exception e) { }
 
         if (user != null) {
             context.startActivity(new Intent(context, GamesListActivity.class));
@@ -48,9 +47,7 @@ public class GamesListActivity extends Activity {
         List<Game> games = null;
         try {
             games = new GamesListTask().execute().get();
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
+        } catch (Exception e) { }
 
         String gamesString = null;
         if (games != null) {

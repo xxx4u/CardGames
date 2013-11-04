@@ -15,8 +15,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import java.util.concurrent.ExecutionException;
-
 public class RegisterActivity extends Activity {
 
     private EditText registerFirstname;
@@ -51,9 +49,7 @@ public class RegisterActivity extends Activity {
                              registerEmail.getText().toString(),
                              registerPassword.getText().toString(), registerPasswordConfirm.getText().toString())
                     .get();
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
+        } catch (Exception e) { }
 
         RegisterActivity.this.startActivity(new Intent(RegisterActivity.this, MainActivity.class));
     }

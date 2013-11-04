@@ -19,8 +19,6 @@ import android.otasyn.cardgames.manage.account.dto.SimpleUser;
 import android.view.View;
 import android.widget.Button;
 
-import java.util.concurrent.ExecutionException;
-
 public class MainActivity extends Activity {
 
     @Override
@@ -82,9 +80,7 @@ public class MainActivity extends Activity {
         SimpleUser user = null;
         try {
             user = new CurrentUserTask().execute().get();
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
+        } catch (Exception e) { }
 
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(MainActivity.this);
         alertBuilder
@@ -98,9 +94,7 @@ public class MainActivity extends Activity {
         boolean logoutSuccess = false;
         try {
             logoutSuccess = new LogoutTask().execute().get();
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
+        } catch (Exception e) { }
 
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(MainActivity.this);
         alertBuilder

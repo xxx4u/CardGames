@@ -15,8 +15,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import java.util.concurrent.ExecutionException;
-
 public class LoginActivity extends Activity {
 
     private static Class<? extends Activity> nextDestination = null;
@@ -49,9 +47,7 @@ public class LoginActivity extends Activity {
             new LoginTask()
                     .execute(loginEmail.getText().toString(), loginPassword.getText().toString(), false)
                     .get();
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
+        } catch (Exception e) { }
 
         launchNextDestination();
     }

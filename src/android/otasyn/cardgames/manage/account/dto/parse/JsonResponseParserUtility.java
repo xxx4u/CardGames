@@ -15,7 +15,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -158,7 +157,7 @@ public class JsonResponseParserUtility {
                 game.setPlayers(players);
             }
             return game;
-        } catch (JSONException | ParseException e) { }
+        } catch (Exception e) { }
         return null;
     }
 

@@ -17,7 +17,6 @@ import android.otasyn.cardgames.manage.account.dto.Friend;
 import android.otasyn.cardgames.manage.account.dto.SimpleUser;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 public class FriendsListActivity extends Activity {
 
@@ -25,7 +24,7 @@ public class FriendsListActivity extends Activity {
         SimpleUser user = null;
         try {
             user = new CurrentUserTask().execute().get();
-        } catch (InterruptedException | ExecutionException e) { }
+        } catch (Exception e) { }
 
         if (user != null) {
             context.startActivity(new Intent(context, FriendsListActivity.class));
@@ -47,9 +46,7 @@ public class FriendsListActivity extends Activity {
         List<Friend> friends = null;
         try {
             friends = new FriendsListTask().execute().get();
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
+        } catch (Exception e) { }
 
         String friendsString = null;
         if (friends != null) {
