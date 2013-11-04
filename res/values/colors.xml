@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="listEntryHeader">#000000</color>
+    <color name="listEntryDetails">#929292</color>
+
+</resources>

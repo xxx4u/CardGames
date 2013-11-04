@@ -10,4 +10,11 @@
     <dimen name="formLabelLeftMargin">8dp</dimen>
     <dimen name="formWidgetBottomMargin">8dp</dimen>
 
+    <dimen name="listEntryBottomMargin">16dp</dimen>
+    <dimen name="listEntryHeaderLeftMargin">4dp</dimen>
+    <dimen name="listEntryDetailsLeftMargin">12dp</dimen>
+
+    <dimen name="awaitingConfirmationLeftRightPadding">4dp</dimen>
+    <dimen name="awaitingConfirmationTopBottomPadding">0dp</dimen>
+
 </resources>
