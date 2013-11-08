@@ -38,7 +38,7 @@ public class GamesListActivity extends Activity {
         }
     }
 
-    final List<Game> games = new ArrayList<>();
+    final List<Game> games = new ArrayList<Game>();
 
     private LinearLayout gamesListLayout;
 

@@ -50,7 +50,7 @@ public class JsonResponseParserUtility {
             boolean success = jsonResponse.getBoolean("success");
             if (success && jsonResponse.has("friends")) {
                 JSONArray jsonFriends = jsonResponse.getJSONArray("friends");
-                List<Friend> friends = new ArrayList<>(jsonFriends.length());
+                List<Friend> friends = new ArrayList<Friend>(jsonFriends.length());
                 for (int n = 0; n < jsonFriends.length(); n++) {
                     friends.add(parseFriend(jsonFriends.getJSONObject(n)));
                 }
@@ -66,7 +66,7 @@ public class JsonResponseParserUtility {
             boolean success = jsonResponse.getBoolean("success");
             if (success && jsonResponse.has("games")) {
                 JSONArray jsonGames = jsonResponse.getJSONArray("games");
-                List<Game> games = new ArrayList<>(jsonGames.length());
+                List<Game> games = new ArrayList<Game>(jsonGames.length());
                 for (int n = 0; n < jsonGames.length(); n++) {
                     games.add(parseGame(jsonGames.getJSONObject(n)));
                 }
@@ -150,7 +150,7 @@ public class JsonResponseParserUtility {
             }
             if (jsonGame.has("players")) {
                 JSONArray jsonPlayers = jsonGame.getJSONArray("players");
-                Set<GamePlayer> players = new HashSet<>(jsonPlayers.length());
+                Set<GamePlayer> players = new HashSet<GamePlayer>(jsonPlayers.length());
                 for (int n = 0; n < jsonPlayers.length(); n++) {
                     players.add(parseGamePlayer(jsonPlayers.getJSONObject(n)));
                 }

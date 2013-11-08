@@ -86,7 +86,7 @@ public class Game implements Serializable {
 
     public Set<GamePlayer> getPlayers() {
         if (players == null) {
-            players = new HashSet<>();
+            players = new HashSet<GamePlayer>();
         }
         return players;
     }

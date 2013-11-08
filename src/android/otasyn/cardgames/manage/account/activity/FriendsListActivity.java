@@ -37,7 +37,7 @@ public class FriendsListActivity extends Activity {
         }
     }
 
-    final List<Friend> friends = new ArrayList<>();
+    final List<Friend> friends = new ArrayList<Friend>();
 
     private LinearLayout friendsListLayout;
 
