@@ -74,6 +74,13 @@ public class MainActivity extends Activity {
                 MainActivity.this.startActivity(new Intent(MainActivity.this, GameActivity.class));
             }
         });
+
+        Button andEngineActivityButton = (Button) findViewById(R.id.buttonLaunchAndEngineActivity);
+        andEngineActivityButton.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+                MainActivity.this.startActivity(new Intent(MainActivity.this, AndEngineActivity.class));
+            }
+        });
     }
 
     private void currentUser() {

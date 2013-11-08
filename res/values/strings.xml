@@ -11,6 +11,7 @@
     <string name="mainLaunchFriendsListActivityButton">Friends List</string>
     <string name="mainLaunchGamesListActivityButton">Games List</string>
     <string name="mainLaunchGameActivityButton">Game Activity</string>
+    <string name="mainLaunchAndEngineActivityButton">And Engine Activity</string>
 
     <string name="titleActivityLogin">LoginActivity</string>
     <string name="loginTitle">Login</string>

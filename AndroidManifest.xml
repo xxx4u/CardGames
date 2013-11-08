@@ -32,6 +32,7 @@
         <activity android:name=".manage.account.activity.RegisterActivity"/>
         <activity android:name=".manage.account.activity.FriendsListActivity"/>
         <activity android:name=".manage.account.activity.GamesListActivity"/>
+        <activity android:name="AndEngineActivity"/>
     </application>
 
 </manifest>
