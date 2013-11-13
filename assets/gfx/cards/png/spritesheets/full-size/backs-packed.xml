@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<texture version="1" file="backs-packed.png" type="bitmap" width="227" height="630" pixelformat="RGBA_8888" minfilter="linear" magfilter="linear" wrapt="clamp" wraps="clamp" premultiplyalpha="false">
+    <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker -->
+    <!-- $TexturePacker:SmartUpdate:6d757cbd5e7d25c01d3497380b0bae39:7477e6f9078d7dd00f795ac75a692420:105e01d57bb8513586e3382049752766$ -->
+    <textureregion id="0" src="Back_Blue.png" x="2" y="316" width="223" height="312" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="223" srcheight="312"/>
+    <textureregion id="1" src="Back_Red.png" x="2" y="2" width="223" height="312" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="223" srcheight="312"/>
+</texture>

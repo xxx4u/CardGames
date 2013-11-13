@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+ Patrick John Haskins
+ Zachary Evans
+ CS7020 - Term Project
+-->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="android.otasyn.cardgames"
     android:versionCode="1"
@@ -25,14 +30,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="android.otasyn.cardgames.GameActivity"
+            android:name=".FirebaseActivity"
             android:label="@string/titleActivityGame" >
         </activity>
         <activity android:name=".manage.account.activity.LoginActivity"/>
         <activity android:name=".manage.account.activity.RegisterActivity"/>
         <activity android:name=".manage.account.activity.FriendsListActivity"/>
         <activity android:name=".manage.account.activity.GamesListActivity"/>
-        <activity android:name="AndEngineActivity"/>
+        <activity android:name=".AndEngineActivity"/>
+        <activity android:name=".Cards46x64Activity"/>
+        <activity android:name=".Cards92x128Activity"/>
+        <activity android:name=".Cards184x256Activity"/>
+        <activity android:name=".CardsFullSizeActivity"/>
     </application>
 
 </manifest>

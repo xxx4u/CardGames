@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<texture version="1" file="all-packed.png" type="bitmap" width="660" height="1006" pixelformat="RGBA_8888" minfilter="linear" magfilter="linear" wrapt="clamp" wraps="clamp" premultiplyalpha="false">
+    <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker -->
+    <!-- $TexturePacker:SmartUpdate:e0ece8eafcb6fec34d7b975c3b1e4e8c:88530af5f2c75c7169aa75a6bbc1f0e6:ea2e0e0a049280b0170cabd769543732$ -->
+    <textureregion id="0" src="10C.png" x="522" y="912" width="92" height="128" rotated="true" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="1" src="10D.png" x="566" y="782" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="2" src="10H.png" x="472" y="782" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="3" src="10S.png" x="566" y="652" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="4" src="2C.png" x="472" y="652" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="5" src="2D.png" x="392" y="912" width="92" height="128" rotated="true" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="6" src="2H.png" x="378" y="782" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="7" src="2S.png" x="378" y="652" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="8" src="3C.png" x="566" y="522" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="9" src="3D.png" x="472" y="522" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="10" src="3H.png" x="284" y="782" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="11" src="3S.png" x="284" y="652" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="12" src="4C.png" x="378" y="522" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="13" src="4D.png" x="566" y="392" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="14" src="4H.png" x="472" y="392" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="15" src="4S.png" x="262" y="912" width="92" height="128" rotated="true" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="16" src="5C.png" x="190" y="782" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="17" src="5D.png" x="190" y="652" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="18" src="5H.png" x="566" y="262" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="19" src="5S.png" x="472" y="262" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="20" src="6C.png" x="378" y="392" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="21" src="6D.png" x="284" y="522" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="22" src="6H.png" x="132" y="912" width="92" height="128" rotated="true" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="23" src="6S.png" x="96" y="782" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="24" src="7C.png" x="96" y="652" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="25" src="7D.png" x="566" y="132" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="26" src="7H.png" x="472" y="132" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="27" src="7S.png" x="378" y="262" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="28" src="8C.png" x="284" y="392" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="29" src="8D.png" x="190" y="522" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="30" src="8H.png" x="2" y="912" width="92" height="128" rotated="true" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="31" src="8S.png" x="2" y="782" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="32" src="9C.png" x="566" y="2" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="33" src="9D.png" x="472" y="2" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="34" src="9H.png" x="378" y="132" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="35" src="9S.png" x="284" y="262" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="36" src="AC.png" x="190" y="392" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="37" src="AD.png" x="96" y="522" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="38" src="AH.png" x="2" y="652" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="39" src="AS.png" x="378" y="2" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="40" src="Back_Blue.png" x="284" y="132" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="41" src="Back_Red.png" x="190" y="262" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="42" src="JC.png" x="96" y="392" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="43" src="JD.png" x="2" y="522" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="44" src="JH.png" x="284" y="2" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="45" src="JS.png" x="190" y="132" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="46" src="KC.png" x="96" y="262" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="47" src="KD.png" x="2" y="392" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="48" src="KH.png" x="190" y="2" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="49" src="KS.png" x="96" y="132" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="50" src="QC.png" x="2" y="262" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="51" src="QD.png" x="96" y="2" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="52" src="QH.png" x="2" y="132" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+    <textureregion id="53" src="QS.png" x="2" y="2" width="92" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="92" srcheight="128"/>
+</texture>

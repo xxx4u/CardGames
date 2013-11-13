@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<texture version="1" file="diamonds-lettered-packed.png" type="bitmap" width="632" height="454" pixelformat="RGBA_8888" minfilter="linear" magfilter="linear" wrapt="clamp" wraps="clamp" premultiplyalpha="false">
+    <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker -->
+    <!-- $TexturePacker:SmartUpdate:fb2e0eb1b15f4751de52a3e9bf611242:ec7ed4c969364ba26448bdee1c8f6377:17ecca49bbde2b5be430e6e5afc033b4$ -->
+    <textureregion id="0" src="AD.png" x="317" y="228" width="224" height="313" rotated="true" trimmed="false" srcx="0" srcy="0" srcwidth="224" srcheight="313"/>
+    <textureregion id="1" src="JD.png" x="2" y="228" width="224" height="313" rotated="true" trimmed="false" srcx="0" srcy="0" srcwidth="224" srcheight="313"/>
+    <textureregion id="2" src="KD.png" x="317" y="2" width="224" height="313" rotated="true" trimmed="false" srcx="0" srcy="0" srcwidth="224" srcheight="313"/>
+    <textureregion id="3" src="QD.png" x="2" y="2" width="224" height="313" rotated="true" trimmed="false" srcx="0" srcy="0" srcwidth="224" srcheight="313"/>
+</texture>

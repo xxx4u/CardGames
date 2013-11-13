@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<texture version="1" file="diamonds-packed.png" type="bitmap" width="932" height="704" pixelformat="RGBA_8888" minfilter="linear" magfilter="linear" wrapt="clamp" wraps="clamp" premultiplyalpha="false">
+    <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker -->
+    <!-- $TexturePacker:SmartUpdate:3165221a0d38cfd42e635b8831d830c3:edf6b5a2776fe7198d791b08d8503e95:6d25beb72a887efcee242494f0ead8b4$ -->
+    <textureregion id="0" src="10D.png" x="746" y="260" width="184" height="256" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="184" srcheight="256"/>
+    <textureregion id="1" src="2D.png" x="560" y="260" width="184" height="256" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="184" srcheight="256"/>
+    <textureregion id="2" src="3D.png" x="746" y="2" width="184" height="256" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="184" srcheight="256"/>
+    <textureregion id="3" src="4D.png" x="560" y="2" width="184" height="256" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="184" srcheight="256"/>
+    <textureregion id="4" src="5D.png" x="518" y="518" width="184" height="256" rotated="true" trimmed="false" srcx="0" srcy="0" srcwidth="184" srcheight="256"/>
+    <textureregion id="5" src="6D.png" x="374" y="260" width="184" height="256" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="184" srcheight="256"/>
+    <textureregion id="6" src="7D.png" x="374" y="2" width="184" height="256" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="184" srcheight="256"/>
+    <textureregion id="7" src="8D.png" x="260" y="518" width="184" height="256" rotated="true" trimmed="false" srcx="0" srcy="0" srcwidth="184" srcheight="256"/>
+    <textureregion id="8" src="9D.png" x="188" y="260" width="184" height="256" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="184" srcheight="256"/>
+    <textureregion id="9" src="AD.png" x="188" y="2" width="184" height="256" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="184" srcheight="256"/>
+    <textureregion id="10" src="JD.png" x="2" y="518" width="184" height="256" rotated="true" trimmed="false" srcx="0" srcy="0" srcwidth="184" srcheight="256"/>
+    <textureregion id="11" src="KD.png" x="2" y="260" width="184" height="256" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="184" srcheight="256"/>
+    <textureregion id="12" src="QD.png" x="2" y="2" width="184" height="256" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="184" srcheight="256"/>
+</texture>

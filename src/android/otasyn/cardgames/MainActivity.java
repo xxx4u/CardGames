@@ -68,10 +68,10 @@ public class MainActivity extends Activity {
             }
         });
         
-        Button gameActivityButton = (Button) findViewById(R.id.buttonLaunchGameActivity);
+        Button gameActivityButton = (Button) findViewById(R.id.buttonLaunchFirebaseActivity);
         gameActivityButton.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
-                MainActivity.this.startActivity(new Intent(MainActivity.this, GameActivity.class));
+                MainActivity.this.startActivity(new Intent(MainActivity.this, FirebaseActivity.class));
             }
         });
 
@@ -79,6 +79,34 @@ public class MainActivity extends Activity {
         andEngineActivityButton.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 MainActivity.this.startActivity(new Intent(MainActivity.this, AndEngineActivity.class));
+            }
+        });
+
+        Button cards46x64ActivityButton = (Button) findViewById(R.id.buttonLaunchCards46x64Activity);
+        cards46x64ActivityButton.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+                MainActivity.this.startActivity(new Intent(MainActivity.this, Cards46x64Activity.class));
+            }
+        });
+
+        Button cards92x128ActivityButton = (Button) findViewById(R.id.buttonLaunchCards92x128Activity);
+        cards92x128ActivityButton.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+                MainActivity.this.startActivity(new Intent(MainActivity.this, Cards92x128Activity.class));
+            }
+        });
+
+        Button cards184x256ActivityButton = (Button) findViewById(R.id.buttonLaunchCards184x256Activity);
+        cards184x256ActivityButton.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+                MainActivity.this.startActivity(new Intent(MainActivity.this, Cards184x256Activity.class));
+            }
+        });
+
+        Button cardsFullSizeActivityButton = (Button) findViewById(R.id.buttonLaunchCardsFullSizeActivity);
+        cardsFullSizeActivityButton.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+                MainActivity.this.startActivity(new Intent(MainActivity.this, CardsFullSizeActivity.class));
             }
         });
     }

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<texture version="1" file="hearts-lettered-packed.png" type="bitmap" width="632" height="454" pixelformat="RGBA_8888" minfilter="linear" magfilter="linear" wrapt="clamp" wraps="clamp" premultiplyalpha="false">
+    <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker -->
+    <!-- $TexturePacker:SmartUpdate:efac6914c62dfd675b054f5eea2c2d96:775a3c094b4677e751fc4c44a44aab62:340af13c3103a549b1dc05854cb5b5e5$ -->
+    <textureregion id="0" src="AH.png" x="317" y="228" width="224" height="313" rotated="true" trimmed="false" srcx="0" srcy="0" srcwidth="224" srcheight="313"/>
+    <textureregion id="1" src="JH.png" x="2" y="228" width="224" height="313" rotated="true" trimmed="false" srcx="0" srcy="0" srcwidth="224" srcheight="313"/>
+    <textureregion id="2" src="KH.png" x="317" y="2" width="224" height="313" rotated="true" trimmed="false" srcx="0" srcy="0" srcwidth="224" srcheight="313"/>
+    <textureregion id="3" src="QH.png" x="2" y="2" width="224" height="313" rotated="true" trimmed="false" srcx="0" srcy="0" srcwidth="224" srcheight="313"/>
+</texture>

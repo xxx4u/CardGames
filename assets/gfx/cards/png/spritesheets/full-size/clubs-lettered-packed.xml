@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<texture version="1" file="clubs-lettered-packed.png" type="bitmap" width="632" height="454" pixelformat="RGBA_8888" minfilter="linear" magfilter="linear" wrapt="clamp" wraps="clamp" premultiplyalpha="false">
+    <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker -->
+    <!-- $TexturePacker:SmartUpdate:ad57a0a84e535746c41ee65b78410bca:31d0108096a3be368d7440bfa4073670:e6e9eebce613057159c86c7493cfbff8$ -->
+    <textureregion id="0" src="AC.png" x="317" y="228" width="224" height="313" rotated="true" trimmed="false" srcx="0" srcy="0" srcwidth="224" srcheight="313"/>
+    <textureregion id="1" src="JC.png" x="2" y="228" width="224" height="313" rotated="true" trimmed="false" srcx="0" srcy="0" srcwidth="224" srcheight="313"/>
+    <textureregion id="2" src="KC.png" x="317" y="2" width="224" height="313" rotated="true" trimmed="false" srcx="0" srcy="0" srcwidth="224" srcheight="313"/>
+    <textureregion id="3" src="QC.png" x="2" y="2" width="224" height="313" rotated="true" trimmed="false" srcx="0" srcy="0" srcwidth="224" srcheight="313"/>
+</texture>

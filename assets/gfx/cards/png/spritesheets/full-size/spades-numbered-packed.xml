@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<texture version="1" file="spades-numbered-packed.png" type="bitmap" width="680" height="947" pixelformat="RGBA_8888" minfilter="linear" magfilter="linear" wrapt="clamp" wraps="clamp" premultiplyalpha="false">
+    <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker -->
+    <!-- $TexturePacker:SmartUpdate:29a995baa361c8a0b7bdb87552655276:61cc356b4c561d042853f8ed954dea70:b18356f8cdda94f9235272e9cb232c3e$ -->
+    <textureregion id="0" src="10S.png" x="454" y="632" width="224" height="313" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="224" srcheight="313"/>
+    <textureregion id="1" src="2S.png" x="228" y="632" width="224" height="313" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="224" srcheight="313"/>
+    <textureregion id="2" src="3S.png" x="454" y="317" width="224" height="313" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="224" srcheight="313"/>
+    <textureregion id="3" src="4S.png" x="228" y="317" width="224" height="313" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="224" srcheight="313"/>
+    <textureregion id="4" src="5S.png" x="454" y="2" width="224" height="313" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="224" srcheight="313"/>
+    <textureregion id="5" src="6S.png" x="228" y="2" width="224" height="313" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="224" srcheight="313"/>
+    <textureregion id="6" src="7S.png" x="2" y="632" width="224" height="313" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="224" srcheight="313"/>
+    <textureregion id="7" src="8S.png" x="2" y="317" width="224" height="313" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="224" srcheight="313"/>
+    <textureregion id="8" src="9S.png" x="2" y="2" width="224" height="313" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="224" srcheight="313"/>
+</texture>

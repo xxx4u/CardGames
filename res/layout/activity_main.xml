@@ -1,70 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:paddingBottom="@dimen/activityVerticalMargin"
-              android:paddingLeft="@dimen/activityHorizontalMargin"
-              android:paddingRight="@dimen/activityHorizontalMargin"
-              android:paddingTop="@dimen/activityVerticalMargin"
-              tools:context=".MainActivity"
-              android:orientation="vertical">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/activityVerticalMargin"
+            android:paddingLeft="@dimen/activityHorizontalMargin"
+            android:paddingRight="@dimen/activityHorizontalMargin"
+            android:paddingTop="@dimen/activityVerticalMargin"
+            tools:context=".MainActivity">
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mainLaunchLoginActivityButton"
+                android:id="@+id/buttonLaunchLoginActivity"
+                android:layout_gravity="center"/>
 
-    <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/mainLaunchLoginActivityButton"
-            android:id="@+id/buttonLaunchLoginActivity"
-            android:layout_gravity="center"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mainCurrentUserButton"
+                android:id="@+id/buttonCurrentUser"
+                android:layout_gravity="center"/>
 
-    <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/mainCurrentUserButton"
-            android:id="@+id/buttonCurrentUser"
-            android:layout_gravity="center"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mainLogoutButton"
+                android:id="@+id/buttonLogout"
+                android:layout_gravity="center"/>
 
-    <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/mainLogoutButton"
-            android:id="@+id/buttonLogout"
-            android:layout_gravity="center"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mainLaunchFriendsListActivityButton"
+                android:id="@+id/buttonLaunchFriendsListActivity"
+                android:layout_gravity="center"/>
 
-    <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/mainLaunchFriendsListActivityButton"
-            android:id="@+id/buttonLaunchFriendsListActivity"
-            android:layout_gravity="center"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mainLaunchGamesListActivityButton"
+                android:id="@+id/buttonLaunchGamesListActivity"
+                android:layout_gravity="center"/>
 
-    <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/mainLaunchGamesListActivityButton"
-            android:id="@+id/buttonLaunchGamesListActivity"
-            android:layout_gravity="center"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mainLaunchRegisterActivityButton"
+                android:id="@+id/buttonLaunchRegisterActivity"
+                android:layout_gravity="center"/>
 
-    <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/mainLaunchRegisterActivityButton"
-            android:id="@+id/buttonLaunchRegisterActivity"
-            android:layout_gravity="center"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mainLaunchFirebaseActivityButton"
+                android:id="@+id/buttonLaunchFirebaseActivity"
+                android:layout_gravity="center"/>
 
-    <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/mainLaunchGameActivityButton"
-            android:id="@+id/buttonLaunchGameActivity"
-            android:layout_gravity="center"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mainLaunchAndEngineActivityButton"
+                android:id="@+id/buttonLaunchAndEngineActivity"
+                android:layout_gravity="center"/>
 
-    <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/mainLaunchAndEngineActivityButton"
-            android:id="@+id/buttonLaunchAndEngineActivity"
-            android:layout_gravity="center"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mainLaunchCards46x64ActivityButton"
+                android:id="@+id/buttonLaunchCards46x64Activity"
+                android:layout_gravity="center"/>
 
-</LinearLayout>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mainLaunchCards92x128ActivityButton"
+                android:id="@+id/buttonLaunchCards92x128Activity"
+                android:layout_gravity="center"/>
+
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mainLaunchCards184x256ActivityButton"
+                android:id="@+id/buttonLaunchCards184x256Activity"
+                android:layout_gravity="center"/>
+
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mainLaunchCardsFullSizeActivityButton"
+                android:id="@+id/buttonLaunchCardsFullSizeActivity"
+                android:layout_gravity="center"/>
+    </LinearLayout>
+</ScrollView>

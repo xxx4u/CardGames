@@ -8,7 +8,7 @@ package android.otasyn.cardgames;
 import android.os.Bundle;
 import android.app.Activity;
 
-public class GameActivity extends Activity {
+public class FirebaseActivity extends Activity {
     
     GameView gameView;
 

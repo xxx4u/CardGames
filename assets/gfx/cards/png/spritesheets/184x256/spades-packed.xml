@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<texture version="1" file="spades-packed.png" type="bitmap" width="932" height="704" pixelformat="RGBA_8888" minfilter="linear" magfilter="linear" wrapt="clamp" wraps="clamp" premultiplyalpha="false">
+    <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker -->
+    <!-- $TexturePacker:SmartUpdate:fc6adb1c1228e8ce6fa97041668179c8:770f4035dce886589e8a387ecf8a9e7c:be3b62a8222599aae0c5ee5b645433b2$ -->
+    <textureregion id="0" src="10S.png" x="746" y="260" width="184" height="256" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="184" srcheight="256"/>
+    <textureregion id="1" src="2S.png" x="560" y="260" width="184" height="256" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="184" srcheight="256"/>
+    <textureregion id="2" src="3S.png" x="746" y="2" width="184" height="256" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="184" srcheight="256"/>
+    <textureregion id="3" src="4S.png" x="560" y="2" width="184" height="256" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="184" srcheight="256"/>
+    <textureregion id="4" src="5S.png" x="518" y="518" width="184" height="256" rotated="true" trimmed="false" srcx="0" srcy="0" srcwidth="184" srcheight="256"/>
+    <textureregion id="5" src="6S.png" x="374" y="260" width="184" height="256" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="184" srcheight="256"/>
+    <textureregion id="6" src="7S.png" x="374" y="2" width="184" height="256" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="184" srcheight="256"/>
+    <textureregion id="7" src="8S.png" x="260" y="518" width="184" height="256" rotated="true" trimmed="false" srcx="0" srcy="0" srcwidth="184" srcheight="256"/>
+    <textureregion id="8" src="9S.png" x="188" y="260" width="184" height="256" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="184" srcheight="256"/>
+    <textureregion id="9" src="AS.png" x="188" y="2" width="184" height="256" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="184" srcheight="256"/>
+    <textureregion id="10" src="JS.png" x="2" y="518" width="184" height="256" rotated="true" trimmed="false" srcx="0" srcy="0" srcwidth="184" srcheight="256"/>
+    <textureregion id="11" src="KS.png" x="2" y="260" width="184" height="256" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="184" srcheight="256"/>
+    <textureregion id="12" src="QS.png" x="2" y="2" width="184" height="256" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="184" srcheight="256"/>
+</texture>
