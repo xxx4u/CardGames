@@ -5,55 +5,28 @@
  */
 package android.otasyn.cardgames;
 
+import android.otasyn.cardgames.activity.CardGameActivity;
 import android.otasyn.cardgames.scene.CardGameScene;
 import android.otasyn.cardgames.sprite.CardSprite;
 import android.otasyn.cardgames.utility.TextureUtility;
 import android.otasyn.cardgames.utility.enumeration.CardId;
-import org.andengine.engine.camera.Camera;
-import org.andengine.engine.options.EngineOptions;
-import org.andengine.engine.options.ScreenOrientation;
-import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
-import org.andengine.entity.scene.Scene;
-import org.andengine.entity.scene.background.SpriteBackground;
-import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.texture.region.ITextureRegion;
-import org.andengine.ui.activity.SimpleBaseGameActivity;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class CardsFullSizeActivity extends SimpleBaseGameActivity {
+public class CardsFullSizeActivity extends CardGameActivity {
 
-    private static int CAMERA_WIDTH = 720;
-    private static int CAMERA_HEIGHT = 1280;
-
-    private ITextureRegion backgroundTextureRegion;
     private Map<CardId,ITextureRegion> cardTextureRegions;
-    private Map<CardId,CardSprite> cardSprites;
+    private final Map<CardId,CardSprite> cardSprites = new HashMap<CardId,CardSprite>(CardId.values().length);
 
     @Override
-    public EngineOptions onCreateEngineOptions() {
-        final Camera camera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
-        return new EngineOptions(true, ScreenOrientation.PORTRAIT_FIXED,
-                new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), camera);
-    }
-
-    @Override
-    protected void onCreateResources() {
-        this.backgroundTextureRegion = TextureUtility.loadBackground(this, CAMERA_WIDTH, CAMERA_HEIGHT);
+    protected void onCreateCardGameResources() {
         this.cardTextureRegions = TextureUtility.loadCardsFullSize(this);
     }
 
     @Override
-    protected Scene onCreateScene() {
-
-        final Scene scene = new CardGameScene();
-
-        final Sprite bgSprite = new Sprite(0, 0, this.backgroundTextureRegion, this.getVertexBufferObjectManager());
-        scene.setBackground(new SpriteBackground(bgSprite));
-
-        this.cardSprites = new HashMap<CardId,CardSprite>(this.cardTextureRegions.size());
-
+    protected void onCreateCardGameScene(final CardGameScene scene) {
         int xMod = 40;
         int xSlightMod = 3;
         int yMod = 80;
@@ -272,8 +245,5 @@ public class CardsFullSizeActivity extends SimpleBaseGameActivity {
             scene.registerTouchArea(cs);
         }
         scene.setTouchAreaBindingOnActionDownEnabled(true);
-        scene.setOnAreaTouchTraversalFrontToBack();
-
-        return scene;
     }
 }
