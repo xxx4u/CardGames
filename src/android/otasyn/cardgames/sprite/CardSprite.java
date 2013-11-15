@@ -1,6 +1,7 @@
 package android.otasyn.cardgames.sprite;
 
 import android.otasyn.cardgames.scene.CardGameScene;
+import android.otasyn.cardgames.utility.enumeration.CardType;
 import org.andengine.entity.IEntity;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.input.touch.TouchEvent;
@@ -9,13 +10,20 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 public class CardSprite extends Sprite {
 
+    private CardType cardType;
     private float touchOffsetX;
     private float touchOffsetY;
 
     private CardGameScene scene;
 
-    public CardSprite(final float pX, final float pY, final ITextureRegion pTextureRegion, final VertexBufferObjectManager pVertexBufferObjectManager) {
+    public CardSprite(CardType cardType, final float pX, final float pY,
+                      final ITextureRegion pTextureRegion, final VertexBufferObjectManager pVertexBufferObjectManager) {
         super(pX, pY, pTextureRegion, pVertexBufferObjectManager);
+        this.cardType = cardType;
+    }
+
+    public CardType getCardType() {
+        return cardType;
     }
 
     @Override

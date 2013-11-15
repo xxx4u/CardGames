@@ -1,6 +1,7 @@
 package android.otasyn.cardgames.scene;
 
 import android.otasyn.cardgames.sprite.CardSprite;
+import android.otasyn.cardgames.utility.enumeration.CardType;
 import org.andengine.entity.IEntity;
 import org.andengine.entity.IEntityMatcher;
 import org.andengine.entity.scene.ITouchArea;
@@ -8,104 +9,113 @@ import org.andengine.entity.scene.Scene;
 import org.andengine.input.touch.TouchEvent;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CardGameScene extends Scene {
 
-    private final List<CardSprite> cardSprites;
-    private CardSprite touchedCardSprite = null;
-
     private static final int CARDS_ZINDEX_START = 1000;
 
-    public CardGameScene() {
-        super();
-        this.cardSprites = new ArrayList<CardSprite>(54);
-    }
-
-    public CardGameScene(final int pChildCount) {
-        super(pChildCount);
-        this.cardSprites = new ArrayList<CardSprite>(54);
-    }
+    private final List<CardSprite> cardSpriteList = new ArrayList<CardSprite>(CardType.values().length);
+    private final Map<CardType,CardSprite> cardSpriteMap = new HashMap<CardType,CardSprite>(CardType.values().length);
+    private CardSprite touchedCardSprite = null;
 
     @Override
     public void attachChild(final IEntity pEntity) throws IllegalStateException {
-        super.attachChild(pEntity);
         if (pEntity instanceof CardSprite) {
             attachCardSprite((CardSprite) pEntity);
+        } else {
+            super.attachChild(pEntity);
         }
     }
 
-    private void attachCardSprite(final CardSprite cardSprite) {
-        cardSprites.add(cardSprite);
+    public void attachCardSprite(final CardSprite cardSprite) {
+        super.attachChild(cardSprite);
+        cardSpriteList.add(cardSprite);
+        cardSpriteMap.put(cardSprite.getCardType(), cardSprite);
         reindexCardSprites();
-    }
-
-    @Override
-    public void detachChildren() {
-        super.detachChildren();
-        detachCardSprites();
+        registerTouchArea(cardSprite);
     }
 
     @Override
     public boolean detachChild(final IEntity pEntity) {
-        boolean result = super.detachChild(pEntity);
         if (pEntity instanceof CardSprite) {
-            detachCardSprite((CardSprite) pEntity, true);
+            return detachCardSprite((CardSprite) pEntity, true);
         }
-        return result;
+        return super.detachChild(pEntity);
     }
 
     @Override
     public IEntity detachChild(final int pTag) {
-        IEntity result = super.detachChild(pTag);
-        if (result instanceof CardSprite) {
-            detachCardSprite((CardSprite) result, true);
+        IEntity child = getChildByTag(pTag);
+        if (child instanceof CardSprite) {
+            if (detachCardSprite((CardSprite) child, true)) {
+                return child;
+            }
         }
-        return result;
+        return super.detachChild(pTag);
     }
 
     @Override
     public IEntity detachChild(final IEntityMatcher pEntityMatcher) {
-        IEntity result = super.detachChild(pEntityMatcher);
-        if (result instanceof CardSprite) {
-            detachCardSprite((CardSprite) result, true);
+        IEntity child = getChildByMatcher(pEntityMatcher);
+        if (child instanceof CardSprite) {
+            if (detachCardSprite((CardSprite) child, true)) {
+                return child;
+            }
         }
-        return result;
+        return super.detachChild(pEntityMatcher);
     }
 
     @Override
-    public boolean detachChildren(final IEntityMatcher pEntityMatcher) {
-        boolean result = super.detachChildren(pEntityMatcher);
-        detachCardSprites();
-        return result;
-    }
-
-    private void detachCardSprites() {
-        for (CardSprite cardSprite : cardSprites) {
-            if (!cardSprite.hasParent()) {
-                detachCardSprite(cardSprite, false);
+    public void detachChildren() {
+        for (int n = 0; n < getChildCount(); n++) {
+            IEntity child = getChildByIndex(n);
+            if (child instanceof CardSprite) {
+                detachCardSprite((CardSprite) child, false);
+            } else {
+                detachChild(child);
             }
         }
         reindexCardSprites();
     }
 
-    private void detachCardSprite(final CardSprite cardSprite, final boolean doReindex) {
-        while (cardSprites.remove(cardSprite)) {}
+    @Override
+    public boolean detachChildren(final IEntityMatcher pEntityMatcher) {
+        IEntity child = getChildByMatcher(pEntityMatcher);
+        boolean result = true;
+        while (child != null) {
+            if (child instanceof CardSprite) {
+                result = result && detachCardSprite((CardSprite) child, false);
+            } else {
+                result = result && detachChild(child);
+            }
+        }
+        reindexCardSprites();
+        return result;
+    }
+
+    public boolean detachCardSprite(final CardSprite cardSprite, final boolean doReindex) {
+        boolean result = super.detachChild(cardSprite);
+        while (cardSpriteList.remove(cardSprite)) {}
+        cardSpriteMap.remove(cardSprite.getCardType());
         if (doReindex) {
             reindexCardSprites();
         }
+        return result;
     }
 
     private void reindexCardSprites() {
-        for (int n = 0; n < cardSprites.size(); n++) {
-            cardSprites.get(n).setZIndex(CARDS_ZINDEX_START + n);
+        for (int n = 0; n < cardSpriteList.size(); n++) {
+            cardSpriteList.get(n).setZIndex(CARDS_ZINDEX_START + n);
         }
         this.sortChildren();
     }
 
     public void moveCardSpriteToFront(final CardSprite cardSprite) {
-        while (cardSprites.remove(cardSprite)) {}
-        cardSprites.add(cardSprite);
+        while (cardSpriteList.remove(cardSprite)) {}
+        cardSpriteList.add(cardSprite);
         reindexCardSprites();
     }
 
@@ -151,5 +161,9 @@ public class CardGameScene extends Scene {
                 this.touchedCardSprite = null;
         }
         return result;
+    }
+
+    public CardSprite getCardSprite(final CardType cardType) {
+        return cardSpriteMap.get(cardType);
     }
 }
