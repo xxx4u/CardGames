@@ -120,7 +120,7 @@ public class CardGameScene extends Scene {
     }
 
     public boolean isTouchedCardSprite(final CardSprite cardSprite) {
-        return touchedCardSprite == cardSprite;
+        return cardSprite != null && touchedCardSprite == cardSprite;
     }
 
     @Override
@@ -137,9 +137,17 @@ public class CardGameScene extends Scene {
                 }
                 if (this.touchedCardSprite != null) {
                     moveCardSpriteToFront(this.touchedCardSprite);
+                    this.touchedCardSprite.setTouchOffset(pSceneTouchEvent);
+                }
+                break;
+            case TouchEvent.ACTION_MOVE:
+                if (this.isTouchedCardSprite(this.touchedCardSprite)) {
+                    this.touchedCardSprite.setPosition(pSceneTouchEvent);
+                    return true;
                 }
                 break;
             case TouchEvent.ACTION_UP:
+            case TouchEvent.ACTION_CANCEL:
                 this.touchedCardSprite = null;
         }
         return result;

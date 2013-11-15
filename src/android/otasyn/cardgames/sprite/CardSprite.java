@@ -34,24 +34,12 @@ public class CardSprite extends Sprite {
         this.scene = null;
     }
 
-    @Override
-    public boolean onAreaTouched(final TouchEvent pSceneTouchEvent, final float pTouchAreaLocalX,
-                                 final float pTouchAreaLocalY) {
-        switch (pSceneTouchEvent.getAction()) {
-            case TouchEvent.ACTION_DOWN:
-                touchOffsetX = pSceneTouchEvent.getX() - this.getX();
-                touchOffsetY = pSceneTouchEvent.getY() - this.getY();
-                break;
-            case TouchEvent.ACTION_MOVE:
-                if (scene.isTouchedCardSprite(this)) {
-                    this.setPosition(pSceneTouchEvent.getX() - touchOffsetX, pSceneTouchEvent.getY() - touchOffsetY);
-                    return true;
-                }
-                break;
-            case TouchEvent.ACTION_UP:
-            case TouchEvent.ACTION_CANCEL:
-                return true;
-        }
-        return false;
+    public void setTouchOffset(final TouchEvent pSceneTouchEvent) {
+        touchOffsetX = pSceneTouchEvent.getX() - this.getX();
+        touchOffsetY = pSceneTouchEvent.getY() - this.getY();
+    }
+
+    public void setPosition(final TouchEvent pSceneTouchEvent) {
+        this.setPosition(pSceneTouchEvent.getX() - touchOffsetX, pSceneTouchEvent.getY() - touchOffsetY);
     }
 }
