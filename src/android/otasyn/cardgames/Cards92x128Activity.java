@@ -5,8 +5,10 @@
  */
 package android.otasyn.cardgames;
 
+import android.otasyn.cardgames.scene.CardGameScene;
+import android.otasyn.cardgames.sprite.CardSprite;
 import android.otasyn.cardgames.utility.TextureUtility;
-import android.otasyn.cardgames.utility.enumeration.Card;
+import android.otasyn.cardgames.utility.enumeration.CardId;
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
@@ -16,6 +18,7 @@ import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Cards92x128Activity extends SimpleBaseGameActivity {
@@ -24,7 +27,8 @@ public class Cards92x128Activity extends SimpleBaseGameActivity {
     private static int CAMERA_HEIGHT = 1280;
 
     private ITextureRegion backgroundTextureRegion;
-    private Map<Card,ITextureRegion> cardTextureRegions;
+    private Map<CardId,ITextureRegion> cardTextureRegions;
+    private Map<CardId,CardSprite> cardSprites;
 
     @Override
     public EngineOptions onCreateEngineOptions() {
@@ -42,10 +46,12 @@ public class Cards92x128Activity extends SimpleBaseGameActivity {
     @Override
     protected Scene onCreateScene() {
 
-        final Scene scene = new Scene();
+        final Scene scene = new CardGameScene();
 
         final Sprite bgSprite = new Sprite(0, 0, this.backgroundTextureRegion, this.getVertexBufferObjectManager());
         scene.attachChild(bgSprite);
+
+        this.cardSprites = new HashMap<CardId,CardSprite>(this.cardTextureRegions.size());
 
         int xMod = 20;
         int xSlightMod = 3;
@@ -54,157 +60,218 @@ public class Cards92x128Activity extends SimpleBaseGameActivity {
 
         int x = 360;
         int y = 0;
-        Sprite cardSprite = new Sprite(x, y, this.cardTextureRegions.get(Card.BACK_BLUE), this.getVertexBufferObjectManager());
+        CardSprite cardSprite = new CardSprite(x, y, this.cardTextureRegions.get(CardId.BACK_BLUE), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
+        this.cardSprites.put(CardId.BACK_BLUE, cardSprite);
 
         x = x + (2 * xMod);
         y = y + (2 * yGroupMod);
-        cardSprite = new Sprite(x, y, this.cardTextureRegions.get(Card.BACK_RED), this.getVertexBufferObjectManager());
+        cardSprite = new CardSprite(x, y, this.cardTextureRegions.get(CardId.BACK_RED), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
+        this.cardSprites.put(CardId.BACK_RED, cardSprite);
 
         x = 0;
         int startY = 0;
         y = startY;
-        cardSprite = new Sprite(x, y, this.cardTextureRegions.get(Card.CLUBS_ACE), this.getVertexBufferObjectManager());
+        cardSprite = new CardSprite(x, y, this.cardTextureRegions.get(CardId.CLUBS_ACE), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
-        cardSprite = new Sprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(Card.DIAMONDS_ACE), this.getVertexBufferObjectManager());
+        this.cardSprites.put(CardId.CLUBS_ACE, cardSprite);
+        cardSprite = new CardSprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(CardId.DIAMONDS_ACE), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
-        cardSprite = new Sprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(Card.HEARTS_ACE), this.getVertexBufferObjectManager());
+        this.cardSprites.put(CardId.DIAMONDS_ACE, cardSprite);
+        cardSprite = new CardSprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(CardId.HEARTS_ACE), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
-        cardSprite = new Sprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(Card.SPADES_ACE), this.getVertexBufferObjectManager());
+        this.cardSprites.put(CardId.HEARTS_ACE, cardSprite);
+        cardSprite = new CardSprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(CardId.SPADES_ACE), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
+        this.cardSprites.put(CardId.SPADES_ACE, cardSprite);
 
         x+=xMod;
         y = (startY+=yGroupMod);
-        cardSprite = new Sprite(x, y, this.cardTextureRegions.get(Card.CLUBS_TWO), this.getVertexBufferObjectManager());
+        cardSprite = new CardSprite(x, y, this.cardTextureRegions.get(CardId.CLUBS_TWO), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
-        cardSprite = new Sprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(Card.DIAMONDS_TWO), this.getVertexBufferObjectManager());
+        this.cardSprites.put(CardId.CLUBS_TWO, cardSprite);
+        cardSprite = new CardSprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(CardId.DIAMONDS_TWO), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
-        cardSprite = new Sprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(Card.HEARTS_TWO), this.getVertexBufferObjectManager());
+        this.cardSprites.put(CardId.DIAMONDS_TWO, cardSprite);
+        cardSprite = new CardSprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(CardId.HEARTS_TWO), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
-        cardSprite = new Sprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(Card.SPADES_TWO), this.getVertexBufferObjectManager());
+        this.cardSprites.put(CardId.HEARTS_TWO, cardSprite);
+        cardSprite = new CardSprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(CardId.SPADES_TWO), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
+        this.cardSprites.put(CardId.SPADES_TWO, cardSprite);
 
         x+=xMod;
         y = (startY+=yGroupMod);
-        cardSprite = new Sprite(x, y, this.cardTextureRegions.get(Card.CLUBS_THREE), this.getVertexBufferObjectManager());
+        cardSprite = new CardSprite(x, y, this.cardTextureRegions.get(CardId.CLUBS_THREE), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
-        cardSprite = new Sprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(Card.DIAMONDS_THREE), this.getVertexBufferObjectManager());
+        this.cardSprites.put(CardId.CLUBS_THREE, cardSprite);
+        cardSprite = new CardSprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(CardId.DIAMONDS_THREE), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
-        cardSprite = new Sprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(Card.HEARTS_THREE), this.getVertexBufferObjectManager());
+        this.cardSprites.put(CardId.DIAMONDS_THREE, cardSprite);
+        cardSprite = new CardSprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(CardId.HEARTS_THREE), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
-        cardSprite = new Sprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(Card.SPADES_THREE), this.getVertexBufferObjectManager());
+        this.cardSprites.put(CardId.HEARTS_THREE, cardSprite);
+        cardSprite = new CardSprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(CardId.SPADES_THREE), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
+        this.cardSprites.put(CardId.SPADES_THREE, cardSprite);
 
         x+=xMod;
         y = (startY+=yGroupMod);
-        cardSprite = new Sprite(x, y, this.cardTextureRegions.get(Card.CLUBS_FOUR), this.getVertexBufferObjectManager());
+        cardSprite = new CardSprite(x, y, this.cardTextureRegions.get(CardId.CLUBS_FOUR), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
-        cardSprite = new Sprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(Card.DIAMONDS_FOUR), this.getVertexBufferObjectManager());
+        this.cardSprites.put(CardId.CLUBS_FOUR, cardSprite);
+        cardSprite = new CardSprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(CardId.DIAMONDS_FOUR), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
-        cardSprite = new Sprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(Card.HEARTS_FOUR), this.getVertexBufferObjectManager());
+        this.cardSprites.put(CardId.DIAMONDS_FOUR, cardSprite);
+        cardSprite = new CardSprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(CardId.HEARTS_FOUR), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
-        cardSprite = new Sprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(Card.SPADES_FOUR), this.getVertexBufferObjectManager());
+        this.cardSprites.put(CardId.HEARTS_FOUR, cardSprite);
+        cardSprite = new CardSprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(CardId.SPADES_FOUR), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
+        this.cardSprites.put(CardId.SPADES_FOUR, cardSprite);
 
         x+=xMod;
         y = (startY+=yGroupMod);
-        cardSprite = new Sprite(x, y, this.cardTextureRegions.get(Card.CLUBS_FIVE), this.getVertexBufferObjectManager());
+        cardSprite = new CardSprite(x, y, this.cardTextureRegions.get(CardId.CLUBS_FIVE), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
-        cardSprite = new Sprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(Card.DIAMONDS_FIVE), this.getVertexBufferObjectManager());
+        this.cardSprites.put(CardId.CLUBS_FIVE, cardSprite);
+        cardSprite = new CardSprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(CardId.DIAMONDS_FIVE), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
-        cardSprite = new Sprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(Card.HEARTS_FIVE), this.getVertexBufferObjectManager());
+        this.cardSprites.put(CardId.DIAMONDS_FIVE, cardSprite);
+        cardSprite = new CardSprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(CardId.HEARTS_FIVE), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
-        cardSprite = new Sprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(Card.SPADES_FIVE), this.getVertexBufferObjectManager());
+        this.cardSprites.put(CardId.HEARTS_FIVE, cardSprite);
+        cardSprite = new CardSprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(CardId.SPADES_FIVE), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
+        this.cardSprites.put(CardId.SPADES_FIVE, cardSprite);
 
         x+=xMod;
         y = (startY+=yGroupMod);
-        cardSprite = new Sprite(x, y, this.cardTextureRegions.get(Card.CLUBS_SIX), this.getVertexBufferObjectManager());
+        cardSprite = new CardSprite(x, y, this.cardTextureRegions.get(CardId.CLUBS_SIX), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
-        cardSprite = new Sprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(Card.DIAMONDS_SIX), this.getVertexBufferObjectManager());
+        this.cardSprites.put(CardId.CLUBS_SIX, cardSprite);
+        cardSprite = new CardSprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(CardId.DIAMONDS_SIX), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
-        cardSprite = new Sprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(Card.HEARTS_SIX), this.getVertexBufferObjectManager());
+        this.cardSprites.put(CardId.DIAMONDS_SIX, cardSprite);
+        cardSprite = new CardSprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(CardId.HEARTS_SIX), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
-        cardSprite = new Sprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(Card.SPADES_SIX), this.getVertexBufferObjectManager());
+        this.cardSprites.put(CardId.HEARTS_SIX, cardSprite);
+        cardSprite = new CardSprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(CardId.SPADES_SIX), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
+        this.cardSprites.put(CardId.SPADES_SIX, cardSprite);
 
         x+=xMod;
         y = (startY+=yGroupMod);
-        cardSprite = new Sprite(x, y, this.cardTextureRegions.get(Card.CLUBS_SEVEN), this.getVertexBufferObjectManager());
+        cardSprite = new CardSprite(x, y, this.cardTextureRegions.get(CardId.CLUBS_SEVEN), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
-        cardSprite = new Sprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(Card.DIAMONDS_SEVEN), this.getVertexBufferObjectManager());
+        this.cardSprites.put(CardId.CLUBS_SEVEN, cardSprite);
+        cardSprite = new CardSprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(CardId.DIAMONDS_SEVEN), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
-        cardSprite = new Sprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(Card.HEARTS_SEVEN), this.getVertexBufferObjectManager());
+        this.cardSprites.put(CardId.DIAMONDS_SEVEN, cardSprite);
+        cardSprite = new CardSprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(CardId.HEARTS_SEVEN), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
-        cardSprite = new Sprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(Card.SPADES_SEVEN), this.getVertexBufferObjectManager());
+        this.cardSprites.put(CardId.HEARTS_SEVEN, cardSprite);
+        cardSprite = new CardSprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(CardId.SPADES_SEVEN), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
+        this.cardSprites.put(CardId.SPADES_SEVEN, cardSprite);
 
         x+=xMod;
         y = (startY+=yGroupMod);
-        cardSprite = new Sprite(x, y, this.cardTextureRegions.get(Card.CLUBS_EIGHT), this.getVertexBufferObjectManager());
+        cardSprite = new CardSprite(x, y, this.cardTextureRegions.get(CardId.CLUBS_EIGHT), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
-        cardSprite = new Sprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(Card.DIAMONDS_EIGHT), this.getVertexBufferObjectManager());
+        this.cardSprites.put(CardId.CLUBS_EIGHT, cardSprite);
+        cardSprite = new CardSprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(CardId.DIAMONDS_EIGHT), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
-        cardSprite = new Sprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(Card.HEARTS_EIGHT), this.getVertexBufferObjectManager());
+        this.cardSprites.put(CardId.DIAMONDS_EIGHT, cardSprite);
+        cardSprite = new CardSprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(CardId.HEARTS_EIGHT), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
-        cardSprite = new Sprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(Card.SPADES_EIGHT), this.getVertexBufferObjectManager());
+        this.cardSprites.put(CardId.HEARTS_EIGHT, cardSprite);
+        cardSprite = new CardSprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(CardId.SPADES_EIGHT), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
+        this.cardSprites.put(CardId.SPADES_EIGHT, cardSprite);
 
         x+=xMod;
         y = (startY+=yGroupMod);
-        cardSprite = new Sprite(x, y, this.cardTextureRegions.get(Card.CLUBS_NINE), this.getVertexBufferObjectManager());
+        cardSprite = new CardSprite(x, y, this.cardTextureRegions.get(CardId.CLUBS_NINE), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
-        cardSprite = new Sprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(Card.DIAMONDS_NINE), this.getVertexBufferObjectManager());
+        this.cardSprites.put(CardId.CLUBS_NINE, cardSprite);
+        cardSprite = new CardSprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(CardId.DIAMONDS_NINE), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
-        cardSprite = new Sprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(Card.HEARTS_NINE), this.getVertexBufferObjectManager());
+        this.cardSprites.put(CardId.DIAMONDS_NINE, cardSprite);
+        cardSprite = new CardSprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(CardId.HEARTS_NINE), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
-        cardSprite = new Sprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(Card.SPADES_NINE), this.getVertexBufferObjectManager());
+        this.cardSprites.put(CardId.HEARTS_NINE, cardSprite);
+        cardSprite = new CardSprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(CardId.SPADES_NINE), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
+        this.cardSprites.put(CardId.SPADES_NINE, cardSprite);
 
         x+=xMod;
         y = (startY+=yGroupMod);
-        cardSprite = new Sprite(x, y, this.cardTextureRegions.get(Card.CLUBS_TEN), this.getVertexBufferObjectManager());
+        cardSprite = new CardSprite(x, y, this.cardTextureRegions.get(CardId.CLUBS_TEN), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
-        cardSprite = new Sprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(Card.DIAMONDS_TEN), this.getVertexBufferObjectManager());
+        this.cardSprites.put(CardId.CLUBS_TEN, cardSprite);
+        cardSprite = new CardSprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(CardId.DIAMONDS_TEN), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
-        cardSprite = new Sprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(Card.HEARTS_TEN), this.getVertexBufferObjectManager());
+        this.cardSprites.put(CardId.DIAMONDS_TEN, cardSprite);
+        cardSprite = new CardSprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(CardId.HEARTS_TEN), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
-        cardSprite = new Sprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(Card.SPADES_TEN), this.getVertexBufferObjectManager());
+        this.cardSprites.put(CardId.HEARTS_TEN, cardSprite);
+        cardSprite = new CardSprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(CardId.SPADES_TEN), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
+        this.cardSprites.put(CardId.SPADES_TEN, cardSprite);
 
         x+=xMod;
         y = (startY+=yGroupMod);
-        cardSprite = new Sprite(x, y, this.cardTextureRegions.get(Card.CLUBS_JACK), this.getVertexBufferObjectManager());
+        cardSprite = new CardSprite(x, y, this.cardTextureRegions.get(CardId.CLUBS_JACK), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
-        cardSprite = new Sprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(Card.DIAMONDS_JACK), this.getVertexBufferObjectManager());
+        this.cardSprites.put(CardId.CLUBS_JACK, cardSprite);
+        cardSprite = new CardSprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(CardId.DIAMONDS_JACK), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
-        cardSprite = new Sprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(Card.HEARTS_JACK), this.getVertexBufferObjectManager());
+        this.cardSprites.put(CardId.DIAMONDS_JACK, cardSprite);
+        cardSprite = new CardSprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(CardId.HEARTS_JACK), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
-        cardSprite = new Sprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(Card.SPADES_JACK), this.getVertexBufferObjectManager());
+        this.cardSprites.put(CardId.HEARTS_JACK, cardSprite);
+        cardSprite = new CardSprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(CardId.SPADES_JACK), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
+        this.cardSprites.put(CardId.SPADES_JACK, cardSprite);
 
         x+=xMod;
         y = (startY+=yGroupMod);
-        cardSprite = new Sprite(x, y, this.cardTextureRegions.get(Card.CLUBS_QUEEN), this.getVertexBufferObjectManager());
+        cardSprite = new CardSprite(x, y, this.cardTextureRegions.get(CardId.CLUBS_QUEEN), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
-        cardSprite = new Sprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(Card.DIAMONDS_QUEEN), this.getVertexBufferObjectManager());
+        this.cardSprites.put(CardId.CLUBS_QUEEN, cardSprite);
+        cardSprite = new CardSprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(CardId.DIAMONDS_QUEEN), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
-        cardSprite = new Sprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(Card.HEARTS_QUEEN), this.getVertexBufferObjectManager());
+        this.cardSprites.put(CardId.DIAMONDS_QUEEN, cardSprite);
+        cardSprite = new CardSprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(CardId.HEARTS_QUEEN), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
-        cardSprite = new Sprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(Card.SPADES_QUEEN), this.getVertexBufferObjectManager());
+        this.cardSprites.put(CardId.HEARTS_QUEEN, cardSprite);
+        cardSprite = new CardSprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(CardId.SPADES_QUEEN), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
+        this.cardSprites.put(CardId.SPADES_QUEEN, cardSprite);
 
         x+=xMod;
         y = (startY+=yGroupMod);
-        cardSprite = new Sprite(x, y, this.cardTextureRegions.get(Card.CLUBS_KING), this.getVertexBufferObjectManager());
+        cardSprite = new CardSprite(x, y, this.cardTextureRegions.get(CardId.CLUBS_KING), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
-        cardSprite = new Sprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(Card.DIAMONDS_KING), this.getVertexBufferObjectManager());
+        this.cardSprites.put(CardId.CLUBS_KING, cardSprite);
+        cardSprite = new CardSprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(CardId.DIAMONDS_KING), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
-        cardSprite = new Sprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(Card.HEARTS_KING), this.getVertexBufferObjectManager());
+        this.cardSprites.put(CardId.DIAMONDS_KING, cardSprite);
+        cardSprite = new CardSprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(CardId.HEARTS_KING), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
-        cardSprite = new Sprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(Card.SPADES_KING), this.getVertexBufferObjectManager());
+        this.cardSprites.put(CardId.HEARTS_KING, cardSprite);
+        cardSprite = new CardSprite(x+=xSlightMod, y+=yMod, this.cardTextureRegions.get(CardId.SPADES_KING), this.getVertexBufferObjectManager());
         scene.attachChild(cardSprite);
+        this.cardSprites.put(CardId.SPADES_KING, cardSprite);
+
+        for (Map.Entry<CardId,CardSprite> cardSpriteEntry : cardSprites.entrySet()) {
+            CardSprite cs = cardSpriteEntry.getValue();
+            scene.registerTouchArea(cs);
+        }
+        scene.setTouchAreaBindingOnActionDownEnabled(true);
+        scene.setOnAreaTouchTraversalFrontToBack();
 
         return scene;
     }

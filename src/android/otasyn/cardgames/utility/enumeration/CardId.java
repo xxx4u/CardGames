@@ -5,7 +5,7 @@
  */
 package android.otasyn.cardgames.utility.enumeration;
 
-public enum Card {
+public enum CardId {
     BACK_BLUE(40,40,0,0),
     BACK_RED(41,41,1,1),
     CLUBS_ACE(36,36,9,0),
@@ -66,7 +66,7 @@ public enum Card {
     private final int id_184x256;
     private final int id_fullSize;
 
-    private Card(final int id_46x64, final int id_92x128, final int id_184x256, final int id_fullSize) {
+    private CardId(final int id_46x64, final int id_92x128, final int id_184x256, final int id_fullSize) {
         this.id_46x64 = id_46x64;
         this.id_92x128 = id_92x128;
         this.id_184x256 = id_184x256;
