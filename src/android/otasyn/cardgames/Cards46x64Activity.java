@@ -14,6 +14,7 @@ import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.andengine.entity.scene.Scene;
+import org.andengine.entity.scene.background.SpriteBackground;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
@@ -49,7 +50,7 @@ public class Cards46x64Activity extends SimpleBaseGameActivity {
         final Scene scene = new CardGameScene();
 
         final Sprite bgSprite = new Sprite(0, 0, this.backgroundTextureRegion, this.getVertexBufferObjectManager());
-        scene.attachChild(bgSprite);
+        scene.setBackground(new SpriteBackground(bgSprite));
 
         this.cardSprites = new HashMap<CardId,CardSprite>(this.cardTextureRegions.size());
         
