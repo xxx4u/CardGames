@@ -13,9 +13,8 @@ import android.otasyn.cardgames.manage.account.activity.FriendsListActivity;
 import android.otasyn.cardgames.manage.account.activity.GamesListActivity;
 import android.otasyn.cardgames.manage.account.activity.LoginActivity;
 import android.otasyn.cardgames.manage.account.activity.RegisterActivity;
-import android.otasyn.cardgames.manage.account.asynctask.CurrentUserTask;
-import android.otasyn.cardgames.manage.account.asynctask.LogoutTask;
 import android.otasyn.cardgames.manage.account.dto.SimpleUser;
+import android.otasyn.cardgames.manage.account.utility.AccountUtility;
 import android.view.View;
 import android.widget.Button;
 
@@ -112,10 +111,7 @@ public class MainActivity extends Activity {
     }
 
     private void currentUser() {
-        SimpleUser user = null;
-        try {
-            user = new CurrentUserTask().execute().get();
-        } catch (Exception e) { }
+        SimpleUser user = AccountUtility.currentUser();
 
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(MainActivity.this);
         alertBuilder
@@ -126,10 +122,7 @@ public class MainActivity extends Activity {
     }
 
     private void logout() {
-        boolean logoutSuccess = false;
-        try {
-            logoutSuccess = new LogoutTask().execute().get();
-        } catch (Exception e) { }
+        boolean logoutSuccess = AccountUtility.logout();
 
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(MainActivity.this);
         alertBuilder

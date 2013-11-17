@@ -11,9 +11,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.otasyn.cardgames.R;
 import android.otasyn.cardgames.manage.account.asynctask.CurrentUserTask;
-import android.otasyn.cardgames.manage.account.asynctask.FriendsListTask;
 import android.otasyn.cardgames.manage.account.dto.Friend;
 import android.otasyn.cardgames.manage.account.dto.SimpleUser;
+import android.otasyn.cardgames.manage.account.utility.AccountUtility;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -53,9 +53,7 @@ public class FriendsListActivity extends Activity {
 
     private void friendsList() {
         friends.clear();
-        try {
-            friends.addAll(new FriendsListTask().execute().get());
-        } catch (Exception e) { }
+        friends.addAll(AccountUtility.retrieveFriendsList());
 
         if (!friends.isEmpty()) {
             friendsListLayout.removeAllViews();

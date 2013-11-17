@@ -10,7 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.otasyn.cardgames.MainActivity;
 import android.otasyn.cardgames.R;
-import android.otasyn.cardgames.manage.account.asynctask.RegisterTask;
+import android.otasyn.cardgames.manage.account.utility.AccountUtility;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -43,14 +43,9 @@ public class RegisterActivity extends Activity {
     }
 
     public void register() {
-        try {
-            new RegisterTask()
-                    .execute(registerFirstname.getText().toString(), registerLastname.getText().toString(),
-                             registerEmail.getText().toString(),
-                             registerPassword.getText().toString(), registerPasswordConfirm.getText().toString())
-                    .get();
-        } catch (Exception e) { }
-
+        AccountUtility.register(registerFirstname.getText().toString(), registerLastname.getText().toString(),
+                                registerEmail.getText().toString(),
+                                registerPassword.getText().toString(), registerPasswordConfirm.getText().toString());
         RegisterActivity.this.startActivity(new Intent(RegisterActivity.this, MainActivity.class));
     }
 

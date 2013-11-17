@@ -10,7 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.otasyn.cardgames.MainActivity;
 import android.otasyn.cardgames.R;
-import android.otasyn.cardgames.manage.account.asynctask.LoginTask;
+import android.otasyn.cardgames.manage.account.utility.AccountUtility;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -43,12 +43,7 @@ public class LoginActivity extends Activity {
     }
 
     public void login() {
-        try {
-            new LoginTask()
-                    .execute(loginEmail.getText().toString(), loginPassword.getText().toString(), false)
-                    .get();
-        } catch (Exception e) { }
-
+        AccountUtility.login(loginEmail.getText().toString(), loginPassword.getText().toString(), false);
         launchNextDestination();
     }
 

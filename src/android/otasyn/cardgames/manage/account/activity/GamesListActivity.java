@@ -11,10 +11,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.otasyn.cardgames.R;
 import android.otasyn.cardgames.manage.account.asynctask.CurrentUserTask;
-import android.otasyn.cardgames.manage.account.asynctask.GamesListTask;
 import android.otasyn.cardgames.manage.account.dto.Game;
 import android.otasyn.cardgames.manage.account.dto.GamePlayer;
 import android.otasyn.cardgames.manage.account.dto.SimpleUser;
+import android.otasyn.cardgames.manage.account.utility.AccountUtility;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -54,9 +54,7 @@ public class GamesListActivity extends Activity {
 
     private void gamesList() {
         games.clear();
-        try {
-            games.addAll(new GamesListTask().execute().get());
-        } catch (Exception e) { }
+        games.addAll(AccountUtility.retrieveGamesList());
 
         if (!games.isEmpty()) {
             gamesListLayout.removeAllViews();
