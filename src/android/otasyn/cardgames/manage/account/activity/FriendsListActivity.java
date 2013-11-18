@@ -33,7 +33,9 @@ public class FriendsListActivity extends Activity {
             context.startActivity(new Intent(context, FriendsListActivity.class));
         } else {
             LoginActivity.setNextDestination(FriendsListActivity.class);
-            context.startActivity(new Intent(context, LoginActivity.class));
+            Intent loginIntent = new Intent(context, LoginActivity.class);
+            loginIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            context.startActivity(loginIntent);
         }
     }
 

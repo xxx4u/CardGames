@@ -34,7 +34,9 @@ public class GamesListActivity extends Activity {
             context.startActivity(new Intent(context, GamesListActivity.class));
         } else {
             LoginActivity.setNextDestination(GamesListActivity.class);
-            context.startActivity(new Intent(context, LoginActivity.class));
+            Intent loginIntent = new Intent(context, LoginActivity.class);
+            loginIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            context.startActivity(loginIntent);
         }
     }
 

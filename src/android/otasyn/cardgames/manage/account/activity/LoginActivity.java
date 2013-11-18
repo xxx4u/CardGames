@@ -6,6 +6,7 @@
 package android.otasyn.cardgames.manage.account.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.otasyn.cardgames.MainActivity;
@@ -16,6 +17,13 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class LoginActivity extends Activity {
+
+    public static void launch(final Context context) {
+        LoginActivity.setNextDestination(MainActivity.class);
+        Intent loginIntent = new Intent(context, LoginActivity.class);
+        loginIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        context.startActivity(loginIntent);
+    }
 
     private static Class<? extends Activity> nextDestination = null;
 
@@ -33,6 +41,10 @@ public class LoginActivity extends Activity {
 
         loginEmail = (EditText) findViewById(R.id.loginEmail);
         loginPassword = (EditText) findViewById(R.id.loginPassword);
+
+        // TODO remove these values
+        loginEmail.setText("otasyn@gmail.com");
+        loginPassword.setText("john");
 
         Button loginSubmitButton = (Button) findViewById(R.id.loginSubmitButton);
         loginSubmitButton.setOnClickListener(new Button.OnClickListener() {
@@ -54,6 +66,8 @@ public class LoginActivity extends Activity {
                     FriendsListActivity.launch(LoginActivity.this);
                 } else if (GamesListActivity.class.equals(nextDestination)) {
                     GamesListActivity.launch(LoginActivity.this);
+                } else if (MainActivity.class.equals(nextDestination)) {
+                    MainActivity.launch(LoginActivity.this);
                 } else {
                     LoginActivity.this.startActivity(new Intent(LoginActivity.this, nextDestination));
                 }

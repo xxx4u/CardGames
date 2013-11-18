@@ -4,7 +4,7 @@
     <string name="appName">Card Games</string>
     <string name="actionSettings">Settings</string>
 
-    <string name="mainLaunchLoginActivityButton">Login </string>
+    <string name="mainLaunchLoginActivityButton">Login</string>
     <string name="mainCurrentUserButton">Current User</string>
     <string name="mainLogoutButton">Logout</string>
     <string name="mainLaunchRegisterActivityButton">Register</string>

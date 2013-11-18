@@ -6,6 +6,7 @@
 package android.otasyn.cardgames.manage.account.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.otasyn.cardgames.MainActivity;
@@ -16,6 +17,19 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class RegisterActivity extends Activity {
+
+    public static void launch(final Context context) {
+        RegisterActivity.setNextDestination(MainActivity.class);
+        Intent registerIntent = new Intent(context, RegisterActivity.class);
+        registerIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        context.startActivity(registerIntent);
+    }
+
+    private static Class<? extends Activity> nextDestination = null;
+
+    public static void setNextDestination(Class<? extends Activity> nextDestination) {
+        RegisterActivity.nextDestination = nextDestination;
+    }
 
     private EditText registerFirstname;
     private EditText registerLastname;

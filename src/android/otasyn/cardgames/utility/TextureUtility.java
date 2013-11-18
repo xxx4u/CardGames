@@ -16,6 +16,10 @@ import org.andengine.extension.texturepacker.opengl.texture.util.texturepacker.e
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
+import org.andengine.opengl.texture.atlas.bitmap.BuildableBitmapTextureAtlas;
+import org.andengine.opengl.texture.atlas.bitmap.source.IBitmapTextureAtlasSource;
+import org.andengine.opengl.texture.atlas.buildable.builder.BlackPawnTextureAtlasBuilder;
+import org.andengine.opengl.texture.atlas.buildable.builder.ITextureAtlasBuilder;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.TextureRegionFactory;
 import org.andengine.ui.activity.BaseGameActivity;
@@ -26,9 +30,13 @@ import java.util.Map;
 
 public class TextureUtility {
 
+    public static final int BUTTON_STATE_UP = 0;
+    public static final int BUTTON_STATE_DOWN = 1;
+    public static final int BUTTON_STATE_DISABLED = 2;
+
     public static ITextureRegion loadBackground(final BaseGameActivity baseGameActivity,
                                                 final int width, final int height) {
-        return loadBackground(baseGameActivity, width, height, Background.BG_BLUE_0B4E66);
+        return loadBackground(baseGameActivity, width, height, Background.BG_GREEN_1A9C48);
     }
 
     public static ITextureRegion loadBackground(final BaseGameActivity baseGameActivity,
@@ -426,5 +434,173 @@ public class TextureUtility {
         }
 
         return cards;
+    }
+
+    public static ITextureRegion[] loadSignInButton(final BaseGameActivity baseGameActivity) {
+        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/buttons/");
+        // Width and height have to be powers of 2 or this won't work.
+        BuildableBitmapTextureAtlas buttonTextureAtlas = new BuildableBitmapTextureAtlas(
+                baseGameActivity.getTextureManager(), 1024, 1024, TextureOptions.NEAREST);
+
+        ITextureRegion signInUpButtonRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
+                buttonTextureAtlas, baseGameActivity, "sign-in-up.png");
+        ITextureRegion signInDownButtonRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
+                buttonTextureAtlas, baseGameActivity, "sign-in-down.png");
+        ITextureRegion signInDisabledButtonRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
+                buttonTextureAtlas, baseGameActivity, "sign-in-disabled.png");
+
+        try {
+            buttonTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 1));
+            buttonTextureAtlas.load();
+
+            ITextureRegion[] textureRegions = new ITextureRegion[3];
+            textureRegions[BUTTON_STATE_UP] = signInUpButtonRegion;
+            textureRegions[BUTTON_STATE_DOWN] = signInDownButtonRegion;
+            textureRegions[BUTTON_STATE_DISABLED] = signInDisabledButtonRegion;
+            return textureRegions;
+        } catch (ITextureAtlasBuilder.TextureAtlasBuilderException e) {
+            Debug.e(e);
+        }
+        return null;
+    }
+
+    public static ITextureRegion[] loadSignOutButton(final BaseGameActivity baseGameActivity) {
+        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/buttons/");
+        // Width and height have to be powers of 2 or this won't work.
+        BuildableBitmapTextureAtlas buttonTextureAtlas = new BuildableBitmapTextureAtlas(
+                baseGameActivity.getTextureManager(), 1024, 1024, TextureOptions.NEAREST);
+
+        ITextureRegion signOutUpButtonRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
+                buttonTextureAtlas, baseGameActivity, "sign-out-up.png");
+        ITextureRegion signOutDownButtonRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
+                buttonTextureAtlas, baseGameActivity, "sign-out-down.png");
+        ITextureRegion signOutDisabledButtonRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
+                buttonTextureAtlas, baseGameActivity, "sign-out-disabled.png");
+
+        try {
+            buttonTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 1));
+            buttonTextureAtlas.load();
+
+            ITextureRegion[] textureRegions = new ITextureRegion[3];
+            textureRegions[BUTTON_STATE_UP] = signOutUpButtonRegion;
+            textureRegions[BUTTON_STATE_DOWN] = signOutDownButtonRegion;
+            textureRegions[BUTTON_STATE_DISABLED] = signOutDisabledButtonRegion;
+            return textureRegions;
+        } catch (ITextureAtlasBuilder.TextureAtlasBuilderException e) {
+            Debug.e(e);
+        }
+        return null;
+    }
+
+    public static ITextureRegion[] loadRegisterButton(final BaseGameActivity baseGameActivity) {
+        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/buttons/");
+        // Width and height have to be powers of 2 or this won't work.
+        BuildableBitmapTextureAtlas buttonTextureAtlas = new BuildableBitmapTextureAtlas(
+                baseGameActivity.getTextureManager(), 1024, 1024, TextureOptions.NEAREST);
+
+        ITextureRegion registerUpButtonRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
+                buttonTextureAtlas, baseGameActivity, "register-up.png");
+        ITextureRegion registerDownButtonRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
+                buttonTextureAtlas, baseGameActivity, "register-down.png");
+        ITextureRegion registerDisabledButtonRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
+                buttonTextureAtlas, baseGameActivity, "register-disabled.png");
+
+        try {
+            buttonTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 1));
+            buttonTextureAtlas.load();
+
+            ITextureRegion[] textureRegions = new ITextureRegion[3];
+            textureRegions[BUTTON_STATE_UP] = registerUpButtonRegion;
+            textureRegions[BUTTON_STATE_DOWN] = registerDownButtonRegion;
+            textureRegions[BUTTON_STATE_DISABLED] = registerDisabledButtonRegion;
+            return textureRegions;
+        } catch (ITextureAtlasBuilder.TextureAtlasBuilderException e) {
+            Debug.e(e);
+        }
+        return null;
+    }
+
+    public static ITextureRegion[] loadDemosButton(final BaseGameActivity baseGameActivity) {
+        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/buttons/");
+        // Width and height have to be powers of 2 or this won't work.
+        BuildableBitmapTextureAtlas buttonTextureAtlas = new BuildableBitmapTextureAtlas(
+                baseGameActivity.getTextureManager(), 1024, 1024, TextureOptions.NEAREST);
+
+        ITextureRegion demosUpButtonRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
+                buttonTextureAtlas, baseGameActivity, "demos-up.png");
+        ITextureRegion demosDownButtonRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
+                buttonTextureAtlas, baseGameActivity, "demos-down.png");
+        ITextureRegion demosDisabledButtonRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
+                buttonTextureAtlas, baseGameActivity, "demos-disabled.png");
+
+        try {
+            buttonTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 1));
+            buttonTextureAtlas.load();
+
+            ITextureRegion[] textureRegions = new ITextureRegion[3];
+            textureRegions[BUTTON_STATE_UP] = demosUpButtonRegion;
+            textureRegions[BUTTON_STATE_DOWN] = demosDownButtonRegion;
+            textureRegions[BUTTON_STATE_DISABLED] = demosDisabledButtonRegion;
+            return textureRegions;
+        } catch (ITextureAtlasBuilder.TextureAtlasBuilderException e) {
+            Debug.e(e);
+        }
+        return null;
+    }
+
+    public static ITextureRegion[] loadFriendsButton(final BaseGameActivity baseGameActivity) {
+        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/buttons/");
+        // Width and height have to be powers of 2 or this won't work.
+        BuildableBitmapTextureAtlas buttonTextureAtlas = new BuildableBitmapTextureAtlas(
+                baseGameActivity.getTextureManager(), 1024, 1024, TextureOptions.NEAREST);
+
+        ITextureRegion friendsUpButtonRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
+                buttonTextureAtlas, baseGameActivity, "friends-up.png");
+        ITextureRegion friendsDownButtonRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
+                buttonTextureAtlas, baseGameActivity, "friends-down.png");
+        ITextureRegion friendsDisabledButtonRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
+                buttonTextureAtlas, baseGameActivity, "friends-disabled.png");
+
+        try {
+            buttonTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 1));
+            buttonTextureAtlas.load();
+
+            ITextureRegion[] textureRegions = new ITextureRegion[3];
+            textureRegions[BUTTON_STATE_UP] = friendsUpButtonRegion;
+            textureRegions[BUTTON_STATE_DOWN] = friendsDownButtonRegion;
+            textureRegions[BUTTON_STATE_DISABLED] = friendsDisabledButtonRegion;
+            return textureRegions;
+        } catch (ITextureAtlasBuilder.TextureAtlasBuilderException e) {
+            Debug.e(e);
+        }
+        return null;
+    }
+
+    public static ITextureRegion[] loadGamesButton(final BaseGameActivity baseGameActivity) {
+        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/buttons/");
+        // Width and height have to be powers of 2 or this won't work.
+        BuildableBitmapTextureAtlas buttonTextureAtlas = new BuildableBitmapTextureAtlas(
+                baseGameActivity.getTextureManager(), 1024, 1024, TextureOptions.NEAREST);
+
+        ITextureRegion gamesUpButtonRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
+                buttonTextureAtlas, baseGameActivity, "games-up.png");
+        ITextureRegion gamesDownButtonRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
+                buttonTextureAtlas, baseGameActivity, "games-down.png");
+        ITextureRegion gamesDisabledButtonRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
+                buttonTextureAtlas, baseGameActivity, "games-disabled.png");
+
+        try {
+            buttonTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 1));
+            buttonTextureAtlas.load();
+
+            ITextureRegion[] textureRegions = new ITextureRegion[3];
+            textureRegions[BUTTON_STATE_UP] = gamesUpButtonRegion;
+            textureRegions[BUTTON_STATE_DOWN] = gamesDownButtonRegion;
+            textureRegions[BUTTON_STATE_DISABLED] = gamesDisabledButtonRegion;
+            return textureRegions;
+        } catch (ITextureAtlasBuilder.TextureAtlasBuilderException e) {
+            Debug.e(e);
+        }
+        return null;
     }
 }
