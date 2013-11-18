@@ -7,6 +7,7 @@ package android.otasyn.cardgames;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.otasyn.cardgames.activity.GameMenuActivity;
 import android.otasyn.cardgames.manage.account.activity.FriendsListActivity;
 import android.otasyn.cardgames.manage.account.activity.GamesListActivity;
@@ -17,7 +18,12 @@ import android.otasyn.cardgames.manage.account.utility.AccountUtility;
 import android.otasyn.cardgames.scene.GameMenuScene;
 import android.otasyn.cardgames.utility.TextureUtility;
 import org.andengine.entity.sprite.ButtonSprite;
+import org.andengine.entity.text.Text;
+import org.andengine.entity.text.TextOptions;
+import org.andengine.opengl.font.Font;
+import org.andengine.opengl.font.FontFactory;
 import org.andengine.opengl.texture.region.ITextureRegion;
+import org.andengine.util.HorizontalAlign;
 
 public class MainActivity extends GameMenuActivity {
 
@@ -47,6 +53,12 @@ public class MainActivity extends GameMenuActivity {
 
     private SimpleUser currentUser;
 
+    private Font boldFont;
+    private Font normalFont;
+
+    private Text userText;
+    private Text emailText;
+
     @Override
     protected void onCreateGameMenuResources() {
         signInButtonRegion = TextureUtility.loadSignInButton(this);
@@ -55,12 +67,27 @@ public class MainActivity extends GameMenuActivity {
         demosButtonRegion = TextureUtility.loadDemosButton(this);
         friendsButtonRegion = TextureUtility.loadFriendsButton(this);
         gamesButtonRegion = TextureUtility.loadGamesButton(this);
+
+        boldFont = FontFactory.create(this.getFontManager(), this.getTextureManager(), 256, 256,
+                Typeface.create(Typeface.DEFAULT, Typeface.BOLD), 32);
+        boldFont.load();
+        normalFont = FontFactory.create(this.getFontManager(), this.getTextureManager(), 256, 256,
+                Typeface.create(Typeface.DEFAULT, Typeface.NORMAL), 32);
+        normalFont.load();
     }
 
     @Override
     protected void onCreateGameMenuScene(final GameMenuScene scene) {
         this.scene = scene;
         float buttonPadding = 20;
+
+        userText = new Text(20, 40, this.boldFont, "", 256,
+                new TextOptions(HorizontalAlign.LEFT), getVertexBufferObjectManager());
+        scene.attachChild(userText);
+
+        emailText = new Text(20, userText.getY() + userText.getHeight(), this.normalFont, "", 256,
+                new TextOptions(HorizontalAlign.LEFT), getVertexBufferObjectManager());
+        scene.attachChild(emailText);
 
         //
         // Both Logged In and Not Logged In
@@ -158,6 +185,13 @@ public class MainActivity extends GameMenuActivity {
 
         signInButton.setVisible(false);
         registerButton.setVisible(false);
+
+        if (currentUser != null) {
+            userText.setText(currentUser.getFirstname() + " " + currentUser.getLastname());
+            emailText.setText(currentUser.getEmail());
+        } else {
+            showLoggedOutButton();
+        }
     }
 
     private void showLoggedOutButton() {
@@ -170,6 +204,9 @@ public class MainActivity extends GameMenuActivity {
 
         signInButton.setVisible(true);
         registerButton.setVisible(true);
+
+        userText.setText("");
+        emailText.setText("");
     }
 
     private class SignInClickListener implements ButtonSprite.OnClickListener {
