@@ -76,6 +76,17 @@ public class JsonResponseParserUtility {
         return null;
     }
 
+    public static Game parseGame(final String responseString) {
+        try {
+            JSONObject jsonResponse = new JSONObject(responseString);
+            boolean success = jsonResponse.getBoolean("success");
+            if (success && jsonResponse.has("game")) {
+                return parseGame(jsonResponse.getJSONObject("game"));
+            }
+        } catch (JSONException e) { }
+        return null;
+    }
+
     private static SimpleUser parseUser(final JSONObject jsonUser) {
         try {
             SimpleUser user = new SimpleUser();

@@ -72,7 +72,7 @@ public class SimpleUser implements Serializable {
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || !(o instanceof SimpleUser)) return false;
 
         SimpleUser that = (SimpleUser) o;
 

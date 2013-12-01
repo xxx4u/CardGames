@@ -8,17 +8,21 @@ package android.otasyn.cardgames.manage.account.activity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.otasyn.cardgames.R;
 import android.otasyn.cardgames.manage.account.activity.widget.GameRow;
+import android.otasyn.cardgames.manage.account.asynctask.AcceptGameTask;
 import android.otasyn.cardgames.manage.account.asynctask.CurrentUserTask;
 import android.otasyn.cardgames.manage.account.dto.Game;
+import android.otasyn.cardgames.manage.account.dto.GamePlayer;
 import android.otasyn.cardgames.manage.account.dto.SimpleUser;
 import android.otasyn.cardgames.manage.account.utility.AccountUtility;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class GamesListActivity extends Activity {
@@ -39,7 +43,8 @@ public class GamesListActivity extends Activity {
         }
     }
 
-    final List<Game> games = new ArrayList<Game>();
+    private final List<Game> games = new ArrayList<Game>();
+    private SimpleUser currentUser;
 
     private LinearLayout gamesListLayout;
 
@@ -50,6 +55,7 @@ public class GamesListActivity extends Activity {
 
         gamesListLayout = (LinearLayout) findViewById(R.id.gamesListLayout);
 
+        currentUser = AccountUtility.currentUser();
         gamesList();
     }
 
@@ -60,28 +66,104 @@ public class GamesListActivity extends Activity {
         if (!games.isEmpty()) {
             gamesListLayout.removeAllViews();
             for (Game game : games) {
-                GameRow gameLayout = new GameRow(this, game);
+                GameRow gameLayout = new GameRow(this, game, currentUser);
                 gameLayout.setOnClickListener(new GameClickListener());
                 gamesListLayout.addView(gameLayout);
             }
         }
     }
 
+    private void playGame() {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(GamesListActivity.this);
+        alertBuilder
+                .setTitle("Start Game")
+                .setMessage("Start Game")
+                .setCancelable(true)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialog, final int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create()
+                .show();
+    }
+
+    private void askToAccept(final Game game, final GameRow gameRow) {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(GamesListActivity.this);
+        alertBuilder
+                .setTitle("Pending")
+                .setMessage("Would you like to accept this game?")
+                .setCancelable(true)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialog, final int which) {
+                        accept(game, gameRow);
+                        dialog.dismiss();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialog, final int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create()
+                .show();
+    }
+
+    private void accept(final Game game, final GameRow gameRow) {
+        Game newGame;
+        try {
+            newGame = new AcceptGameTask().execute(game).get();
+        } catch (Exception e) {
+            newGame = null;
+        }
+        if (newGame != null) {
+            gameRow.setGame(newGame);
+        }
+    }
+
+    private void alertPending() {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(GamesListActivity.this);
+        alertBuilder
+                .setTitle("Pending")
+                .setMessage("Not all players have accepted the game.")
+                .setCancelable(true)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialog, final int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create()
+                .show();
+    }
+
     private class GameClickListener extends GameRow.OnClickListener {
         @Override
-        public void onClick(final GameRow gameRow) {
-            String gameString = null;
-            Game game = gameRow.getGame();
-            if (game != null && game.getGameType() != null) {
-                gameString = game.getGameType().getName() + " [" + (Boolean.TRUE.equals(game.getStarted()) ? "started" : "pending") + "]";
+        public void onClick(final GameRow gameRow, final Game game, final SimpleUser currentUser) {
+            if (game != null) {
+                if (Boolean.TRUE.equals(game.getStarted())) {
+                    playGame();
+                } else {
+                    Iterator<GamePlayer> iter;
+                    GamePlayer currentPlayer = null;
+                    for (iter = game.getPlayers().iterator(); iter.hasNext() && currentPlayer == null;) {
+                        GamePlayer gamePlayer = iter.next();
+                        if (currentUser.equals(gamePlayer)) {
+                            currentPlayer = gamePlayer;
+                        }
+                    }
+                    if (currentPlayer != null) {
+                        if (!Boolean.TRUE.equals(currentPlayer.getAccepted())) {
+                            askToAccept(game, gameRow);
+                        } else {
+                            alertPending();
+                        }
+                    }
+                }
             }
-
-            AlertDialog.Builder alertBuilder = new AlertDialog.Builder(GamesListActivity.this);
-            alertBuilder
-                    .setMessage(gameString != null ? gameString : "No game.")
-                    .setCancelable(true)
-                    .create()
-                    .show();
         }
     }
 
