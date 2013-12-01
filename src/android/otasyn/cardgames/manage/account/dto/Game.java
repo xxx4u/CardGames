@@ -5,6 +5,8 @@
  */
 package android.otasyn.cardgames.manage.account.dto;
 
+import android.otasyn.cardgames.manage.account.enumeration.GameType;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
@@ -16,7 +18,7 @@ public class Game implements Serializable {
     private Integer id;
     private Boolean currentUserIsOwner;
     private SimpleUser owner;
-    private GameType gameType;
+    private GameType gameType = GameType.UNKNOWN;
     private UUID uuid;
     private Boolean started;
     private Date dateAdded;

@@ -8,8 +8,8 @@ package android.otasyn.cardgames.manage.account.dto.parse;
 import android.otasyn.cardgames.manage.account.dto.Friend;
 import android.otasyn.cardgames.manage.account.dto.Game;
 import android.otasyn.cardgames.manage.account.dto.GamePlayer;
-import android.otasyn.cardgames.manage.account.dto.GameType;
 import android.otasyn.cardgames.manage.account.dto.SimpleUser;
+import android.otasyn.cardgames.manage.account.enumeration.GameType;
 import android.otasyn.cardgames.utility.DateUtility;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -174,13 +174,10 @@ public class JsonResponseParserUtility {
 
     private static GameType parseGameType(final JSONObject jsonGameType) {
         try {
-            GameType gameType = new GameType(jsonGameType.getInt("id"));
-            if (jsonGameType.has("name")) {
-                gameType.setName(jsonGameType.getString("name"));
-            }
+            GameType gameType = GameType.findGameType(jsonGameType.getInt("id"));
             return gameType;
         } catch (JSONException e) { }
-        return null;
+        return GameType.UNKNOWN;
     }
 
 }
