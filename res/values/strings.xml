@@ -21,7 +21,7 @@
     <string name="loginTitle">Login</string>
     <string name="loginEmail">Email</string>
     <string name="loginPassword">Password</string>
-    <string name="loginRememberCredentials">Remember Credentials</string>
+    <string name="loginRememberCredentials">Remember</string>
     <string name="loginSubmitButton">Submit</string>
 
     <string name="titleActivityRegister">RegisterActivity</string>

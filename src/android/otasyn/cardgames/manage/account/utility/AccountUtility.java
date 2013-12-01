@@ -1,5 +1,9 @@
 package android.otasyn.cardgames.manage.account.utility;
 
+import android.content.Context;
+import android.otasyn.cardgames.database.DeleteLoginTask;
+import android.otasyn.cardgames.database.LoginInfo;
+import android.otasyn.cardgames.database.SetLoginTask;
 import android.otasyn.cardgames.manage.account.asynctask.CurrentUserTask;
 import android.otasyn.cardgames.manage.account.asynctask.FriendsListTask;
 import android.otasyn.cardgames.manage.account.asynctask.GamesListTask;
@@ -26,9 +30,27 @@ public class AccountUtility {
         return null;
     }
 
-    public static SimpleUser login(final String email, final String password, final boolean rememberMe) {
+    public static SimpleUser rememberAndLogin(final Context context, final boolean remember,
+                                        final LoginInfo newLoginInfo, final LoginInfo oldLoginInfo) {
+        remember(context, remember, newLoginInfo, oldLoginInfo);
+        return login(newLoginInfo);
+    }
+
+    public static void remember(final Context context, final boolean remember,
+                                final LoginInfo newLoginInfo, final LoginInfo oldLoginInfo) {
+        if (remember) {
+            if (!newLoginInfo.equals(oldLoginInfo)) {
+                new SetLoginTask().execute(context, newLoginInfo);
+            }
+        } else {
+            new DeleteLoginTask().execute(context);
+        }
+    }
+
+    public static SimpleUser login(final LoginInfo loginInfo) {
         try {
-            return new LoginTask().execute(email, password, rememberMe).get();
+            // For now, don't use spring RememberMe functionality.
+            return new LoginTask().execute(loginInfo.getEmail(), loginInfo.getPassword(), false).get();
         } catch (Exception e) {
             Debug.e("Failed to log in.", e);
         }

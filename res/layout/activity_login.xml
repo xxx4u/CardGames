@@ -45,6 +45,14 @@
             android:inputType="textPassword"
             android:layout_marginBottom="@dimen/formWidgetBottomMargin"/>
 
+    <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/loginRememberCredentials"
+            android:id="@+id/loginRemember"
+            android:layout_gravity="left|center_vertical"
+            android:checked="false"/>
+
     <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

@@ -11,9 +11,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.otasyn.cardgames.MainActivity;
 import android.otasyn.cardgames.R;
+import android.otasyn.cardgames.database.GetLoginListTask;
+import android.otasyn.cardgames.database.LoginInfo;
 import android.otasyn.cardgames.manage.account.utility.AccountUtility;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 public class LoginActivity extends Activity {
@@ -33,6 +36,9 @@ public class LoginActivity extends Activity {
 
     private EditText loginEmail;
     private EditText loginPassword;
+    private CheckBox loginRemember;
+
+    private LoginInfo loginInfo;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,10 +47,23 @@ public class LoginActivity extends Activity {
 
         loginEmail = (EditText) findViewById(R.id.loginEmail);
         loginPassword = (EditText) findViewById(R.id.loginPassword);
+        loginRemember = (CheckBox) findViewById(R.id.loginRemember);
 
-        // TODO remove these values
-        loginEmail.setText("otasyn@gmail.com");
-        loginPassword.setText("john");
+        try {
+            loginInfo = new GetLoginListTask().execute(this).get();
+        } catch (Exception e) {
+            loginInfo = null;
+        }
+
+        if (loginInfo == null) {
+            loginEmail.setText("");
+            loginPassword.setText("");
+            loginRemember.setChecked(false);
+        } else {
+            loginEmail.setText(loginInfo.getEmail());
+            loginPassword.setText(loginInfo.getPassword());
+            loginRemember.setChecked(true);
+        }
 
         Button loginSubmitButton = (Button) findViewById(R.id.loginSubmitButton);
         loginSubmitButton.setOnClickListener(new Button.OnClickListener() {
@@ -55,7 +74,8 @@ public class LoginActivity extends Activity {
     }
 
     public void login() {
-        AccountUtility.login(loginEmail.getText().toString(), loginPassword.getText().toString(), false);
+        LoginInfo newLoginInfo = new LoginInfo(loginEmail.getText().toString(), loginPassword.getText().toString());
+        AccountUtility.rememberAndLogin(LoginActivity.this, loginRemember.isChecked(), newLoginInfo, loginInfo);
         launchNextDestination();
     }
 
