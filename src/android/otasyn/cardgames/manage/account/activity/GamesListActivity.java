@@ -93,21 +93,6 @@ public class GamesListActivity extends Activity {
                 gamesListLayout.addView(gameLayout);
             }
         }
-
-/*        String gamesString = null;
-        if (games != null) {
-            gamesString = "Games[" + games.size() + "]:";
-            for (Game game : games) {
-                gamesString += "\n  " + (game.getGameType() != null ? game.getGameType().getName() + ": " : "") + DateUtility.dateFormat.format(game.getDateAdded());
-            }
-        }
-
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(GamesListActivity.this);
-        alertBuilder
-                .setMessage(gamesString != null ? gamesString : "No games.")
-                .setCancelable(true)
-                .create()
-                .show();*/
     }
 
 }

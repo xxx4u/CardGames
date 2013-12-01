@@ -1,3 +1,8 @@
+/**
+ * Patrick John Haskins
+ * Zachary Evans
+ * CS7020 - Term Project
+ */
 package android.otasyn.cardgames.database;
 
 public class SqlQuery {
