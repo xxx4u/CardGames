@@ -2,6 +2,7 @@ package android.otasyn.cardgames.activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Typeface;
 import android.otasyn.cardgames.R;
 import android.otasyn.cardgames.manage.account.asynctask.MoveTask;
 import android.otasyn.cardgames.manage.account.asynctask.TurnTask;
@@ -17,6 +18,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.NumberPicker;
 import org.andengine.entity.sprite.ButtonSprite;
+import org.andengine.entity.text.Text;
+import org.andengine.entity.text.TextOptions;
+import org.andengine.opengl.font.Font;
+import org.andengine.opengl.font.FontFactory;
+import org.andengine.util.HorizontalAlign;
 
 import java.util.List;
 import java.util.Map;
@@ -26,17 +32,22 @@ public class FreestyleGameActivity extends CardGameActivity {
 
     private ButtonSprite deckButton;
 
+    private Font boldFont;
+    private Text currentTurnText;
+    private Text userText;
+
     @Override
     protected void onCreateCardGameResources() {
         setCardTextureRegions(TextureUtility.loadCards92x128(this));
+
+        boldFont = FontFactory.create(this.getFontManager(), this.getTextureManager(), 256, 256,
+                Typeface.create(Typeface.DEFAULT, Typeface.BOLD), 32);
+        boldFont.load();
     }
 
     @Override
     protected void onCreateCardGameScene(final CardGameScene scene) {
-
-        displayDeck();
-        displayHands();
-
+        displayAll();
     }
 
     private class DeckClickListener implements ButtonSprite.OnClickListener {
@@ -174,6 +185,12 @@ public class FreestyleGameActivity extends CardGameActivity {
         move();
     }
 
+    private void displayAll() {
+        displayDeck();
+        displayHands();
+        displayTurnPlayer();
+    }
+
     private void displayDeck() {
         if (deckButton == null) {
             float deckX = 20f;
@@ -239,6 +256,28 @@ public class FreestyleGameActivity extends CardGameActivity {
         }
     }
 
+    private void displayTurnPlayer() {
+        if (currentTurnText == null) {
+            currentTurnText = new Text(20, 40, this.boldFont, "", 256,
+                    new TextOptions(HorizontalAlign.LEFT), getVertexBufferObjectManager());
+            getCardGameScene().attachChild(currentTurnText);
+        }
+        if (userText == null) {
+            userText = new Text(20, currentTurnText.getY() + currentTurnText.getHeight(), this.boldFont, "", 256,
+                    new TextOptions(HorizontalAlign.LEFT), getVertexBufferObjectManager());
+            getCardGameScene().attachChild(userText);
+        }
+        GamePlayer currentPlayer = getLatestAction().getNextActionPlayer();
+        if (currentPlayer != null) {
+            currentPlayer = getGame().getPlayerMap().get(currentPlayer.getId());
+            currentTurnText.setText("Current Turn:");
+            userText.setText(currentPlayer.getFirstname() + " " + currentPlayer.getLastname());
+        } else {
+            currentTurnText.setText("");
+            userText.setText("");
+        }
+    }
+
     private void move() {
         try {
             setLatestAction((new MoveTask()).execute(
@@ -246,8 +285,7 @@ public class FreestyleGameActivity extends CardGameActivity {
                     JsonStringFormatterUtility.formatFreestyleState((FreestyleState) getLatestAction().getGameState()))
                     .get());
         } catch (Exception e) { }
-        displayDeck();
-        displayHands();
+        displayAll();
     }
 
     private void turn() {
@@ -257,7 +295,6 @@ public class FreestyleGameActivity extends CardGameActivity {
                     JsonStringFormatterUtility.formatFreestyleState((FreestyleState) getLatestAction().getGameState()))
                     .get());
         } catch (Exception e) { }
-        displayDeck();
-        displayHands();
+        displayAll();
     }
 }
