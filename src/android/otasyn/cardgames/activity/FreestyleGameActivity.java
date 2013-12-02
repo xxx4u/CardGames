@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.otasyn.cardgames.R;
 import android.otasyn.cardgames.manage.account.asynctask.MoveTask;
 import android.otasyn.cardgames.manage.account.asynctask.TurnTask;
+import android.otasyn.cardgames.manage.account.dto.GameAction;
 import android.otasyn.cardgames.manage.account.dto.GamePlayer;
 import android.otasyn.cardgames.manage.account.dto.gamestate.FreestyleState;
 import android.otasyn.cardgames.manage.account.dto.gamestate.format.JsonStringFormatterUtility;
@@ -197,6 +198,13 @@ public class FreestyleGameActivity extends CardGameActivity {
         move();
     }
 
+    @Override
+    protected void onLatestActionUpdated(final GameAction latestAction) {
+        if (isGameLoaded() && isGameRunning()) {
+            displayAll();
+        }
+    }
+
     private void displayAll() {
         displayDeck();
         displayHands();
@@ -205,24 +213,28 @@ public class FreestyleGameActivity extends CardGameActivity {
 
     private void displayDeck() {
         if (deckButton == null) {
-            float deckX = 20f;
-            float deckY = (CAMERA_HEIGHT / 2f) - (getRedBack().getHeight() / 2f) ;
+            if (getRedBack() != null) {
+                float deckX = 20f;
+                float deckY = (CAMERA_HEIGHT / 2f) - (getRedBack().getHeight() / 2f) ;
 
-            deckButton = new ButtonSprite(
-                    deckX, deckY,
-                    getRedBack(),
-                    this.getVertexBufferObjectManager());
-            deckButton.setOnClickListener(new DeckClickListener());
-            getCardGameScene().attachChild(deckButton);
-            getCardGameScene().registerTouchArea(deckButton);
+                deckButton = new ButtonSprite(
+                        deckX, deckY,
+                        getRedBack(),
+                        this.getVertexBufferObjectManager());
+                deckButton.setOnClickListener(new DeckClickListener());
+                getCardGameScene().attachChild(deckButton);
+                getCardGameScene().registerTouchArea(deckButton);
+            }
         }
-        if (getLatestAction() != null
-                && getLatestAction().getGameState() != null
-                && getLatestAction().getGameState().getDeck() != null
-                && getLatestAction().getGameState().getDeck().size() > 0) {
-            deckButton.setVisible(true);
-        } else {
-            deckButton.setVisible(false);
+        if (deckButton != null) {
+            if (getLatestAction() != null
+                    && getLatestAction().getGameState() != null
+                    && getLatestAction().getGameState().getDeck() != null
+                    && getLatestAction().getGameState().getDeck().size() > 0) {
+                deckButton.setVisible(true);
+            } else {
+                deckButton.setVisible(false);
+            }
         }
     }
 
@@ -290,10 +302,6 @@ public class FreestyleGameActivity extends CardGameActivity {
             currentTurnText.setText("");
             userText.setText("");
         }
-    }
-
-    private boolean isCurrentUserTurn() {
-        return getCurrentUser().equals(getLatestAction().getNextActionPlayer());
     }
 
     private void move() {

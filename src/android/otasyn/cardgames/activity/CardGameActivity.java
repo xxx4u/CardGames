@@ -1,5 +1,7 @@
 package android.otasyn.cardgames.activity;
 
+import android.os.Handler;
+import android.os.Message;
 import android.otasyn.cardgames.R;
 import android.otasyn.cardgames.manage.account.asynctask.LatestActionTask;
 import android.otasyn.cardgames.manage.account.dto.Game;
@@ -22,6 +24,8 @@ import org.andengine.ui.activity.SimpleBaseGameActivity;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public abstract class CardGameActivity extends SimpleBaseGameActivity {
 
@@ -34,6 +38,7 @@ public abstract class CardGameActivity extends SimpleBaseGameActivity {
     private Game game;
     private SimpleUser currentUser;
     private GameAction latestAction;
+    private Handler latestActionHandler;
 
     private ITextureRegion backgroundTextureRegion;
     private ITextureRegion[] gameMenuButtonRegion;
@@ -69,25 +74,66 @@ public abstract class CardGameActivity extends SimpleBaseGameActivity {
         this.latestAction = latestAction;
     }
 
+    protected boolean isCurrentUserTurn() {
+        return getCurrentUser().equals(getLatestAction().getNextActionPlayer());
+    }
+
     @Override
     public EngineOptions onCreateEngineOptions() {
         setTheme(R.style.GameBoardTheme);
 
-        game = getIntent().getParcelableExtra(GAME_INFO);
-        currentUser = getIntent().getParcelableExtra(CURRENT_USER);
-        try {
-            latestAction = (new LatestActionTask()).execute(game).get();
-        } catch (Exception e) { }
+        updateInfo();
 
-        if (latestAction == null) {
-            latestAction = new GameAction();
-            latestAction.setGame(game);
-            latestAction.setActionNumber(-1);
-        }
+        latestActionHandler = new LatestActionHandler();
+        new Timer().scheduleAtFixedRate(new LatestActionTimerTask(), 5000, 5000);
 
         final Camera camera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
         return new EngineOptions(true, ScreenOrientation.PORTRAIT_FIXED,
                 new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), camera);
+    }
+
+    private void updateInfo() {
+        game = getIntent().getParcelableExtra(GAME_INFO);
+        currentUser = getIntent().getParcelableExtra(CURRENT_USER);
+        updateLatestAction();
+    }
+
+    private void updateLatestAction() {
+        GameAction newLatestAction;
+        try {
+            newLatestAction = (new LatestActionTask()).execute(game).get();
+        } catch (Exception e) {
+            newLatestAction = null;
+        }
+
+        if (newLatestAction == null) {
+            newLatestAction = new GameAction();
+            newLatestAction.setGame(game);
+            newLatestAction.setActionNumber(-1);
+        }
+
+        if (this.latestAction == null || this.latestAction.getActionNumber() != newLatestAction.getActionNumber()) {
+            this.latestAction = newLatestAction;
+            onLatestActionUpdated(this.latestAction);
+        }
+    }
+
+    protected void onLatestActionUpdated(final GameAction latestAction) { }
+
+    private class LatestActionTimerTask extends TimerTask {
+        @Override
+        public void run() {
+            if (!isCurrentUserTurn()) {
+                latestActionHandler.sendEmptyMessage(0);
+            }
+        }
+    }
+
+    private class LatestActionHandler extends Handler {
+        @Override
+        public void handleMessage(Message msg) {
+            updateLatestAction();
+        }
     }
 
     @Override
@@ -138,6 +184,7 @@ public abstract class CardGameActivity extends SimpleBaseGameActivity {
         onCreateCardGameScene(cardGameScene);
 
         cardGameScene.setTouchAreaBindingOnActionDownEnabled(true);
+
         return cardGameScene;
     }
 
