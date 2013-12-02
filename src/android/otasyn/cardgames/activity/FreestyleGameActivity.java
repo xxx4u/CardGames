@@ -57,32 +57,34 @@ public class FreestyleGameActivity extends CardGameActivity {
             FreestyleGameActivity.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    AlertDialog.Builder alertBuilder = new AlertDialog.Builder(FreestyleGameActivity.this);
-                    LayoutInflater inflater = FreestyleGameActivity.this.getLayoutInflater();
-                    final AlertDialog dialog = alertBuilder
-                            .setView(inflater.inflate(R.layout.popup_deck_options, null))
-                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(final DialogInterface dialog, final int which) {
-                                    dialog.dismiss();
-                                }
-                            })
-                            .create();
-                    dialog.show();
-                    Button dealButton = (Button) dialog.findViewById(R.id.deckOptionsDealButton);
-                    dealButton.setOnClickListener(new Button.OnClickListener() {
-                        @Override
-                        public void onClick(final View v) {
-                            dealClick(dialog);
-                        }
-                    });
-                    Button drawButton = (Button) dialog.findViewById(R.id.deckOptionsDrawButton);
-                    drawButton.setOnClickListener(new Button.OnClickListener() {
+                    if (isCurrentUserTurn()) {
+                        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(FreestyleGameActivity.this);
+                        LayoutInflater inflater = FreestyleGameActivity.this.getLayoutInflater();
+                        final AlertDialog dialog = alertBuilder
+                                .setView(inflater.inflate(R.layout.popup_deck_options, null))
+                                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(final DialogInterface dialog, final int which) {
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .create();
+                        dialog.show();
+                        Button dealButton = (Button) dialog.findViewById(R.id.deckOptionsDealButton);
+                        dealButton.setOnClickListener(new Button.OnClickListener() {
+                            @Override
+                            public void onClick(final View v) {
+                                dealClick(dialog);
+                            }
+                        });
+                        Button drawButton = (Button) dialog.findViewById(R.id.deckOptionsDrawButton);
+                        drawButton.setOnClickListener(new Button.OnClickListener() {
                         @Override
                         public void onClick(final View v) {
                             drawClick(dialog);
                         }
                     });
+                    }
                 }
             });
         }
@@ -94,86 +96,96 @@ public class FreestyleGameActivity extends CardGameActivity {
         FreestyleGameActivity.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                AlertDialog.Builder alertBuilder = new AlertDialog.Builder(FreestyleGameActivity.this);
-                LayoutInflater inflater = FreestyleGameActivity.this.getLayoutInflater();
-                final AlertDialog dialog = alertBuilder
-                        .setView(inflater.inflate(R.layout.popup_game_menu, null))
-                        .setCancelable(true)
-                        .setNeutralButton("Close", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(final DialogInterface dialog, final int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .create();
-                dialog.show();
-                Button gameMenuEndTurnButton = (Button) dialog.findViewById(R.id.gameMenuEndTurnButton);
-                gameMenuEndTurnButton.setOnClickListener(new Button.OnClickListener() {
-                    @Override
-                    public void onClick(final View v) {
-                        endTurnClick(dialog);
-                    }
-                });
+                if (isCurrentUserTurn()) {
+                    AlertDialog.Builder alertBuilder = new AlertDialog.Builder(FreestyleGameActivity.this);
+                    LayoutInflater inflater = FreestyleGameActivity.this.getLayoutInflater();
+                    final AlertDialog dialog = alertBuilder
+                            .setView(inflater.inflate(R.layout.popup_game_menu, null))
+                            .setCancelable(true)
+                            .setNeutralButton("Close", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(final DialogInterface dialog, final int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .create();
+                    dialog.show();
+                    Button gameMenuEndTurnButton = (Button) dialog.findViewById(R.id.gameMenuEndTurnButton);
+                    gameMenuEndTurnButton.setOnClickListener(new Button.OnClickListener() {
+                        @Override
+                        public void onClick(final View v) {
+                            endTurnClick(dialog);
+                        }
+                    });
+                }
             }
         });
     }
 
     private void endTurnClick(final AlertDialog dialog) {
-        dialog.dismiss();
-        turn();
+        if (isCurrentUserTurn()) {
+            dialog.dismiss();
+            turn();
+        }
     }
 
     private void dealClick(final AlertDialog deckDialog) {
         deckDialog.dismiss();
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(FreestyleGameActivity.this);
-        LayoutInflater inflater = FreestyleGameActivity.this.getLayoutInflater();
-        final AlertDialog dialog = alertBuilder
-                .setView(inflater.inflate(R.layout.popup_deal, null))
-                .setCancelable(true)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(final DialogInterface dialog, final int which) {
-                        AlertDialog alertDialog = (AlertDialog) dialog;
-                        deal(((NumberPicker) alertDialog.findViewById(R.id.numCards)).getValue());
-                        alertDialog.dismiss();
-                    }
-                })
-                .create();
-        dialog.show();
-        NumberPicker numberPicker = (NumberPicker) dialog.findViewById(R.id.numCards);
-        numberPicker.setMinValue(0);
-        numberPicker.setMaxValue(52);
+        if (isCurrentUserTurn()) {
+            AlertDialog.Builder alertBuilder = new AlertDialog.Builder(FreestyleGameActivity.this);
+            LayoutInflater inflater = FreestyleGameActivity.this.getLayoutInflater();
+            final AlertDialog dialog = alertBuilder
+                    .setView(inflater.inflate(R.layout.popup_deal, null))
+                    .setCancelable(true)
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(final DialogInterface dialog, final int which) {
+                            AlertDialog alertDialog = (AlertDialog) dialog;
+                            deal(((NumberPicker) alertDialog.findViewById(R.id.numCards)).getValue());
+                            alertDialog.dismiss();
+                        }
+                    })
+                    .create();
+            dialog.show();
+            NumberPicker numberPicker = (NumberPicker) dialog.findViewById(R.id.numCards);
+            numberPicker.setMinValue(0);
+            numberPicker.setMaxValue(52);
+        }
     }
 
     private void deal(final int numCards) {
-        if (getLatestAction().getGameState() != null) {
-            Queue<Card> deck = getLatestAction().getGameState().getDeck();
-            for (int n = 0; n < numCards && !deck.isEmpty(); n++) {
-                GamePlayer player = null;
-                int t = -1;
-                for (int p = 0; p < getGame().getPlayers().size() && !deck.isEmpty(); p++, t++) {
-                    if (player == null) {
-                        player = getLatestAction().getNextActionPlayer();
-                        t = getGame().getTurnOrder().indexOf(player);
-                    } else {
-                        if (t >= getGame().getTurnOrder().size()) {
-                            t = 0;
+        if (isCurrentUserTurn()) {
+            if (getLatestAction().getGameState() != null) {
+                Queue<Card> deck = getLatestAction().getGameState().getDeck();
+                for (int n = 0; n < numCards && !deck.isEmpty(); n++) {
+                    GamePlayer player = null;
+                    int t = -1;
+                    for (int p = 0; p < getGame().getPlayers().size() && !deck.isEmpty(); p++, t++) {
+                        if (player == null) {
+                            player = getLatestAction().getNextActionPlayer();
+                            t = getGame().getTurnOrder().indexOf(player);
+                        } else {
+                            if (t >= getGame().getTurnOrder().size()) {
+                                t = 0;
+                            }
+                            player = getGame().getTurnOrder().get(t);
                         }
-                        player = getGame().getTurnOrder().get(t);
-                    }
-                    Card nextCard = deck.poll();
-                    if (nextCard != null) {
-                        getLatestAction().getGameState().getHands().get(player).add(nextCard);
+                        Card nextCard = deck.poll();
+                        if (nextCard != null) {
+                            getLatestAction().getGameState().getHands().get(player).add(nextCard);
+                        }
                     }
                 }
             }
+            move();
         }
-        move();
     }
 
     private void drawClick(final AlertDialog dialog) {
-        dialog.dismiss();
-        draw();
+        if (isCurrentUserTurn()) {
+            dialog.dismiss();
+            draw();
+        }
     }
 
     private void draw() {
@@ -278,6 +290,10 @@ public class FreestyleGameActivity extends CardGameActivity {
             currentTurnText.setText("");
             userText.setText("");
         }
+    }
+
+    private boolean isCurrentUserTurn() {
+        return getCurrentUser().equals(getLatestAction().getNextActionPlayer());
     }
 
     private void move() {
