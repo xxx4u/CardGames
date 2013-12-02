@@ -13,6 +13,7 @@ import android.otasyn.cardgames.manage.account.dto.SimpleUser;
 import android.otasyn.cardgames.manage.account.dto.gamestate.FivesState;
 import android.otasyn.cardgames.manage.account.dto.gamestate.FreestyleState;
 import android.otasyn.cardgames.manage.account.dto.gamestate.GameState;
+import android.otasyn.cardgames.manage.account.dto.gamestate.freestyle.BoardCard;
 import android.otasyn.cardgames.manage.account.enumeration.GameType;
 import android.otasyn.cardgames.utility.DateUtility;
 import android.otasyn.cardgames.utility.enumeration.Card;
@@ -278,6 +279,9 @@ public class JsonResponseParserUtility {
         }
         FreestyleState freestyleState = new FreestyleState();
         populateGameState(freestyleState, jsonFreestyleState, game);
+        if (jsonFreestyleState.has("board") && !jsonFreestyleState.isNull("board")) {
+            populateBoard(freestyleState, jsonFreestyleState.optJSONObject("board"));
+        }
         return freestyleState;
     }
 
@@ -310,6 +314,7 @@ public class JsonResponseParserUtility {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private static void populateHands(final GameState gameState, final JSONObject jsonHands, final Game game) {
         if (jsonHands != null) {
             Map<GamePlayer,List<Card>> hands = new HashMap<GamePlayer, List<Card>>(jsonHands.length());
@@ -328,6 +333,28 @@ public class JsonResponseParserUtility {
                 }
             }
             gameState.setHands(hands);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private static void populateBoard(final FreestyleState freestyleState, final JSONObject jsonBoard) {
+        if (jsonBoard != null) {
+            Map<Card,BoardCard> board = new HashMap<Card, BoardCard>();
+            Iterator<String> iterator;
+            for (iterator = jsonBoard.keys(); iterator.hasNext();) {
+                String key = iterator.next();
+                Card card = Card.findCard(Integer.valueOf(key));
+                JSONObject jsonBoardCard = jsonBoard.optJSONObject(key);
+                if (jsonBoardCard != null) {
+                    BoardCard boardCard = new BoardCard();
+                    boardCard.setCard(Card.findCard(jsonBoardCard.optInt("card")));
+                    boardCard.setX(Float.valueOf(jsonBoardCard.optString("x")));
+                    boardCard.setY(Float.valueOf(jsonBoardCard.optString("y")));
+                    boardCard.setFaceUp(jsonBoardCard.optBoolean("faceUp"));
+                    board.put(card, boardCard);
+                }
+            }
+            freestyleState.setBoard(board);
         }
     }
 

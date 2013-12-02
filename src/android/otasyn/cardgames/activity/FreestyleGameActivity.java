@@ -10,6 +10,7 @@ import android.otasyn.cardgames.manage.account.dto.GameAction;
 import android.otasyn.cardgames.manage.account.dto.GamePlayer;
 import android.otasyn.cardgames.manage.account.dto.gamestate.FreestyleState;
 import android.otasyn.cardgames.manage.account.dto.gamestate.format.JsonStringFormatterUtility;
+import android.otasyn.cardgames.manage.account.dto.gamestate.freestyle.BoardCard;
 import android.otasyn.cardgames.scene.CardGameScene;
 import android.otasyn.cardgames.sprite.CardSprite;
 import android.otasyn.cardgames.utility.TextureUtility;
@@ -28,6 +29,7 @@ import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.font.Font;
 import org.andengine.opengl.font.FontFactory;
 import org.andengine.util.HorizontalAlign;
+import org.andengine.util.debug.Debug;
 
 import java.util.List;
 import java.util.Map;
@@ -81,6 +83,7 @@ public class FreestyleGameActivity extends CardGameActivity {
                         break;
                     case TouchEvent.ACTION_UP:
                     case TouchEvent.ACTION_CANCEL:
+                        evaluateCardLocation(cardGameScene.getTouchedCardSprite());
                         cardGameScene.setTouchedCardSprite(null);
                 }
                 return true;
@@ -88,6 +91,51 @@ public class FreestyleGameActivity extends CardGameActivity {
         });
 
         displayAll();
+    }
+
+    private void evaluateCardLocation(final CardSprite cardSprite) {
+        if (cardSprite != null) {
+            Debug.d("CardGames", "evaulateCardLocation: " + cardSprite.getCard());
+            if (cardSprite.getY() + cardSprite.getHeight() >= CAMERA_HEIGHT) {
+                if (getLatestAction() != null
+                        && getLatestAction().getGameState() != null
+                        && getLatestAction().getGameState().getHands() != null) {
+                    Card card = cardSprite.getCard();
+                    List<Card> hand = getLatestAction().getGameState().getHands().get(
+                            new GamePlayer(getCurrentUser().getId(), getGame()));
+
+                    if (!hand.contains(card)) {
+                        hand.add(card);
+                    }
+                    if (((FreestyleState) getLatestAction().getGameState()).getBoard() != null) {
+                        ((FreestyleState) getLatestAction().getGameState()).getBoard().remove(card);
+                    }
+                    cardSprite.showBack();
+                    displayHands();
+                }
+            } else {
+                if (getLatestAction() != null
+                        && getLatestAction().getGameState() != null
+                        && getLatestAction().getGameState().getHands() != null) {
+                    Card card = cardSprite.getCard();
+                    for (Map.Entry<GamePlayer,List<Card>> handEntry
+                            : getLatestAction().getGameState().getHands().entrySet()) {
+                        handEntry.getValue().remove(card);
+                    }
+                    if (((FreestyleState) getLatestAction().getGameState()).getBoard() != null) {
+                        BoardCard boardCard = new BoardCard();
+                        boardCard.setCard(card);
+                        boardCard.setX(cardSprite.getX());
+                        boardCard.setY(cardSprite.getY());
+                        boardCard.setFaceUp(true);
+                        ((FreestyleState) getLatestAction().getGameState()).getBoard().put(card, boardCard);
+                    }
+                    cardSprite.showFace();
+                }
+            }
+            displayHands();
+            move();
+        }
     }
 
     private boolean cardInOtherPlayerHand(final CardSprite cardSprite) {
@@ -257,6 +305,9 @@ public class FreestyleGameActivity extends CardGameActivity {
     @Override
     protected void onLatestActionUpdated(final GameAction latestAction) {
         if (isGameLoaded() && isGameRunning()) {
+            if (!isCurrentUserTurn()) {
+                invertBoard();
+            }
             displayAll();
         }
     }
@@ -264,6 +315,7 @@ public class FreestyleGameActivity extends CardGameActivity {
     private void displayAll() {
         displayDeck();
         displayHands();
+        displayBoard();
         displayTurnPlayer();
     }
 
@@ -338,6 +390,26 @@ public class FreestyleGameActivity extends CardGameActivity {
         }
     }
 
+    private void displayBoard() {
+        if (getLatestAction() != null && getLatestAction().getGameState() != null) {
+            FreestyleState freestyleState = (FreestyleState) getLatestAction().getGameState();
+
+            for (Map.Entry<Card,BoardCard> boardEntry : freestyleState.getBoard().entrySet()) {
+                BoardCard boardCard = boardEntry.getValue();
+
+                CardSprite cardSprite = getCardSprite(boardEntry.getKey());
+                cardSprite.setX(boardCard.getX());
+                cardSprite.setY(boardCard.getY());
+                if (boardCard.isFaceUp()) {
+                    cardSprite.showFace();
+                } else {
+                    cardSprite.showBack();
+                }
+                cardSprite.setVisible(true);
+            }
+        }
+    }
+
     private void displayTurnPlayer() {
         if (currentTurnText == null) {
             currentTurnText = new Text(20, 40, this.boldFont, "", 256,
@@ -371,12 +443,25 @@ public class FreestyleGameActivity extends CardGameActivity {
     }
 
     private void turn() {
+        invertBoard();
         try {
             setLatestAction((new TurnTask()).execute(
                     getGame().getId().toString(),
                     JsonStringFormatterUtility.formatFreestyleState((FreestyleState) getLatestAction().getGameState()))
                     .get());
         } catch (Exception e) { }
+        invertBoard();
         displayAll();
+    }
+
+    private void invertBoard() {
+        FreestyleState freestyleState = (FreestyleState) getLatestAction().getGameState();
+        if (freestyleState != null) {
+            for (Map.Entry<Card,BoardCard> boardEntry : freestyleState.getBoard().entrySet()) {
+                BoardCard boardCard = boardEntry.getValue();
+                boardCard.setX(CAMERA_WIDTH - boardCard.getX());
+                boardCard.setY(CAMERA_HEIGHT - boardCard.getY());
+            }
+        }
     }
 }
