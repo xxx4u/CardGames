@@ -4,6 +4,7 @@ import android.otasyn.cardgames.sprite.CardSprite;
 import android.otasyn.cardgames.utility.enumeration.Card;
 import org.andengine.entity.IEntity;
 import org.andengine.entity.IEntityMatcher;
+import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.ITouchArea;
 import org.andengine.entity.scene.Scene;
 import org.andengine.input.touch.TouchEvent;
@@ -119,7 +120,15 @@ public class CardGameScene extends Scene {
         reindexCardSprites();
     }
 
-    private boolean checkAndSetTouchedCardSprite(final CardSprite checkCardSprite) {
+    public CardSprite getTouchedCardSprite() {
+        return touchedCardSprite;
+    }
+
+    public void setTouchedCardSprite(final CardSprite touchedCardSprite) {
+        this.touchedCardSprite = touchedCardSprite;
+    }
+
+    public boolean checkAndSetTouchedCardSprite(final CardSprite checkCardSprite) {
         if (this.touchedCardSprite == null ||
                 checkCardSprite == null ||
                 checkCardSprite.getZIndex() > this.touchedCardSprite.getZIndex()) {
@@ -135,32 +144,36 @@ public class CardGameScene extends Scene {
 
     @Override
     public boolean onSceneTouchEvent(final TouchEvent pSceneTouchEvent) {
-        boolean result = super.onSceneTouchEvent(pSceneTouchEvent);
-        switch (pSceneTouchEvent.getAction()) {
-            case TouchEvent.ACTION_DOWN:
-                for (ITouchArea touchArea : this.getTouchAreas()) {
-                    if (touchArea instanceof CardSprite) {
-                        if (touchArea.contains(pSceneTouchEvent.getX(), pSceneTouchEvent.getY())) {
-                            checkAndSetTouchedCardSprite((CardSprite) touchArea);
+        IOnSceneTouchListener listener = this.getOnSceneTouchListener();
+        if (listener == null) {
+            boolean result = super.onSceneTouchEvent(pSceneTouchEvent);
+            switch (pSceneTouchEvent.getAction()) {
+                case TouchEvent.ACTION_DOWN:
+                    for (ITouchArea touchArea : this.getTouchAreas()) {
+                        if (touchArea instanceof CardSprite) {
+                            if (touchArea.contains(pSceneTouchEvent.getX(), pSceneTouchEvent.getY())) {
+                                checkAndSetTouchedCardSprite((CardSprite) touchArea);
+                            }
                         }
                     }
-                }
-                if (this.touchedCardSprite != null) {
-                    moveCardSpriteToFront(this.touchedCardSprite);
-                    this.touchedCardSprite.setTouchOffset(pSceneTouchEvent);
-                }
-                break;
-            case TouchEvent.ACTION_MOVE:
-                if (this.isTouchedCardSprite(this.touchedCardSprite)) {
-                    this.touchedCardSprite.setPosition(pSceneTouchEvent);
-                    return true;
-                }
-                break;
-            case TouchEvent.ACTION_UP:
-            case TouchEvent.ACTION_CANCEL:
-                this.touchedCardSprite = null;
+                    if (this.touchedCardSprite != null) {
+                        moveCardSpriteToFront(this.touchedCardSprite);
+                        this.touchedCardSprite.setTouchOffset(pSceneTouchEvent);
+                    }
+                    break;
+                case TouchEvent.ACTION_MOVE:
+                    if (this.isTouchedCardSprite(this.touchedCardSprite)) {
+                        this.touchedCardSprite.setPosition(pSceneTouchEvent);
+                        return true;
+                    }
+                    break;
+                case TouchEvent.ACTION_UP:
+                case TouchEvent.ACTION_CANCEL:
+                    this.touchedCardSprite = null;
+            }
+            return result;
         }
-        return result;
+        return super.onSceneTouchEvent(pSceneTouchEvent);
     }
 
     public CardSprite getCardSprite(final Card card) {

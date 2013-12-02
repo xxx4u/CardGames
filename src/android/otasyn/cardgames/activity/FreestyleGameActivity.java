@@ -18,9 +18,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.NumberPicker;
+import org.andengine.entity.scene.IOnSceneTouchListener;
+import org.andengine.entity.scene.ITouchArea;
+import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.ButtonSprite;
 import org.andengine.entity.text.Text;
 import org.andengine.entity.text.TextOptions;
+import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.font.Font;
 import org.andengine.opengl.font.FontFactory;
 import org.andengine.util.HorizontalAlign;
@@ -48,7 +52,59 @@ public class FreestyleGameActivity extends CardGameActivity {
 
     @Override
     protected void onCreateCardGameScene(final CardGameScene scene) {
+        scene.setOnSceneTouchListener(new IOnSceneTouchListener() {
+            @Override
+            public boolean onSceneTouchEvent(final Scene pScene, final TouchEvent pSceneTouchEvent) {
+                CardGameScene cardGameScene = (CardGameScene) pScene;
+                switch (pSceneTouchEvent.getAction()) {
+                    case TouchEvent.ACTION_DOWN:
+                        for (ITouchArea touchArea : cardGameScene.getTouchAreas()) {
+                            if (touchArea instanceof CardSprite) {
+                                if (touchArea.contains(pSceneTouchEvent.getX(), pSceneTouchEvent.getY())) {
+                                    if (!cardInOtherPlayerHand((CardSprite) touchArea)
+                                            && isCurrentUserTurn()) {
+                                        cardGameScene.checkAndSetTouchedCardSprite((CardSprite) touchArea);
+                                    }
+                                }
+                            }
+                        }
+                        if (cardGameScene.getTouchedCardSprite() != null) {
+                            cardGameScene.moveCardSpriteToFront(cardGameScene.getTouchedCardSprite());
+                            cardGameScene.getTouchedCardSprite().setTouchOffset(pSceneTouchEvent);
+                        }
+                        break;
+                    case TouchEvent.ACTION_MOVE:
+                        if (cardGameScene.isTouchedCardSprite(cardGameScene.getTouchedCardSprite())) {
+                            cardGameScene.getTouchedCardSprite().setPosition(pSceneTouchEvent);
+                            return true;
+                        }
+                        break;
+                    case TouchEvent.ACTION_UP:
+                    case TouchEvent.ACTION_CANCEL:
+                        cardGameScene.setTouchedCardSprite(null);
+                }
+                return true;
+            }
+        });
+
         displayAll();
+    }
+
+    private boolean cardInOtherPlayerHand(final CardSprite cardSprite) {
+        if (getLatestAction() != null
+                && getLatestAction().getGameState() != null
+                && getLatestAction().getGameState().getHands() != null) {
+            Card card = cardSprite.getCard();
+            Map<GamePlayer,List<Card>> hands = getLatestAction().getGameState().getHands();
+            for (Map.Entry<GamePlayer,List<Card>> handEntry : hands.entrySet()) {
+                if (!getCurrentUser().equals(handEntry.getKey())) {
+                    if (handEntry.getValue().contains(card)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     private class DeckClickListener implements ButtonSprite.OnClickListener {
