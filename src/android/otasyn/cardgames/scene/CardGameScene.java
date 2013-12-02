@@ -1,7 +1,7 @@
 package android.otasyn.cardgames.scene;
 
 import android.otasyn.cardgames.sprite.CardSprite;
-import android.otasyn.cardgames.utility.enumeration.CardType;
+import android.otasyn.cardgames.utility.enumeration.Card;
 import org.andengine.entity.IEntity;
 import org.andengine.entity.IEntityMatcher;
 import org.andengine.entity.scene.ITouchArea;
@@ -17,8 +17,8 @@ public class CardGameScene extends Scene {
 
     private static final int CARDS_ZINDEX_START = 1000;
 
-    private final List<CardSprite> cardSpriteList = new ArrayList<CardSprite>(CardType.values().length);
-    private final Map<CardType,CardSprite> cardSpriteMap = new HashMap<CardType,CardSprite>(CardType.values().length);
+    private final List<CardSprite> cardSpriteList = new ArrayList<CardSprite>(Card.values().length);
+    private final Map<Card,CardSprite> cardSpriteMap = new HashMap<Card,CardSprite>(Card.values().length);
     private CardSprite touchedCardSprite = null;
 
     @Override
@@ -33,7 +33,7 @@ public class CardGameScene extends Scene {
     public void attachCardSprite(final CardSprite cardSprite) {
         super.attachChild(cardSprite);
         cardSpriteList.add(cardSprite);
-        cardSpriteMap.put(cardSprite.getCardType(), cardSprite);
+        cardSpriteMap.put(cardSprite.getCard(), cardSprite);
         reindexCardSprites();
         registerTouchArea(cardSprite);
     }
@@ -99,7 +99,7 @@ public class CardGameScene extends Scene {
     public boolean detachCardSprite(final CardSprite cardSprite, final boolean doReindex) {
         boolean result = super.detachChild(cardSprite);
         while (cardSpriteList.remove(cardSprite)) {}
-        cardSpriteMap.remove(cardSprite.getCardType());
+        cardSpriteMap.remove(cardSprite.getCard());
         if (doReindex) {
             reindexCardSprites();
         }
@@ -163,7 +163,7 @@ public class CardGameScene extends Scene {
         return result;
     }
 
-    public CardSprite getCardSprite(final CardType cardType) {
-        return cardSpriteMap.get(cardType);
+    public CardSprite getCardSprite(final Card card) {
+        return cardSpriteMap.get(card);
     }
 }

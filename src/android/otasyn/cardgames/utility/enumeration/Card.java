@@ -5,7 +5,7 @@
  */
 package android.otasyn.cardgames.utility.enumeration;
 
-public enum CardType {
+public enum Card {
     CLUBS_ACE(1,36,36,9,0),
     CLUBS_TWO(2,4,4,1,1),
     CLUBS_THREE(3,8,8,2,2),
@@ -67,7 +67,7 @@ public enum CardType {
     private final int id_184x256;
     private final int id_fullSize;
 
-    private CardType(final int id, final int id_46x64, final int id_92x128, final int id_184x256, final int id_fullSize) {
+    private Card(final int id, final int id_46x64, final int id_92x128, final int id_184x256, final int id_fullSize) {
         this.id = id;
         this.id_46x64 = id_46x64;
         this.id_92x128 = id_92x128;
@@ -95,8 +95,8 @@ public enum CardType {
         return id_fullSize;
     }
 
-    public static CardType findCard(final int id) {
-        for (CardType card : CardType.values()) {
+    public static Card findCard(final int id) {
+        for (Card card : Card.values()) {
             if (card.getId() == id) {
                 return card;
             }
