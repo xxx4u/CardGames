@@ -9,9 +9,13 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.otasyn.cardgames.manage.account.enumeration.GameType;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -23,8 +27,11 @@ public class Game implements Parcelable {
     private GameType gameType = GameType.UNKNOWN;
     private UUID uuid;
     private Boolean started;
+    private List<GamePlayer> turnOrder;
     private Date dateAdded;
     private Set<GamePlayer> players;
+    private Map<Integer,GamePlayer> playerMap;
+    private Boolean currentUserAccepted;
 
     public Game() { }
 
@@ -37,10 +44,21 @@ public class Game implements Parcelable {
         currentUserIsOwner = in.readByte() != 0;
         owner = in.readParcelable(SimpleUser.class.getClassLoader());
         gameType = GameType.findGameType(in.readInt());
-        uuid = UUID.fromString(in.readString());
+        String uuidString = in.readString();
+        if (uuidString != null) {
+            uuid = UUID.fromString(uuidString);
+        }
         started = in.readByte() != 0;
-        dateAdded = new Date(in.readLong());
+        in.readTypedList(getTurnOrder(), GamePlayer.CREATOR);
+        long epoch = in.readLong();
+        if (epoch < 0) {
+            dateAdded = new Date(epoch);
+        }
         players = new HashSet<GamePlayer>(Arrays.asList(in.createTypedArray(GamePlayer.CREATOR)));
+        playerMap = new HashMap<Integer, GamePlayer>(players.size());
+        for (GamePlayer player : players) {
+            playerMap.put(player.getId(), player);
+        }
     }
 
     @Override
@@ -49,9 +67,10 @@ public class Game implements Parcelable {
         dest.writeByte((byte) (Boolean.TRUE.equals(currentUserIsOwner) ? 1 : 0));
         dest.writeParcelable(owner, flags);
         dest.writeInt(gameType.getId());
-        dest.writeString(uuid.toString());
+        dest.writeString(uuid == null ? null : uuid.toString());
         dest.writeByte((byte) (Boolean.TRUE.equals(started) ? 1 : 0));
-        dest.writeLong(dateAdded.getTime());
+        dest.writeTypedList(turnOrder);
+        dest.writeLong(dateAdded == null ? -1 : dateAdded.getTime());
         dest.writeTypedArray(players.toArray(new GamePlayer[players.size()]), flags);
     }
 
@@ -120,6 +139,17 @@ public class Game implements Parcelable {
         this.started = started;
     }
 
+    public List<GamePlayer> getTurnOrder() {
+        if (turnOrder == null) {
+            turnOrder = new ArrayList<GamePlayer>();
+        }
+        return turnOrder;
+    }
+
+    public void setTurnOrder(final List<GamePlayer> turnOrder) {
+        this.turnOrder = turnOrder;
+    }
+
     public java.util.Date getDateAdded() {
         return dateAdded;
     }
@@ -137,6 +167,25 @@ public class Game implements Parcelable {
 
     public void setPlayers(final Set<GamePlayer> players) {
         this.players = players;
+    }
+
+    public Map<Integer, GamePlayer> getPlayerMap() {
+        if (playerMap == null) {
+            playerMap = new HashMap<Integer, GamePlayer>();
+        }
+        return playerMap;
+    }
+
+    public void setPlayerMap(final Map<Integer, GamePlayer> playerMap) {
+        this.playerMap = playerMap;
+    }
+
+    public Boolean getCurrentUserAccepted() {
+        return currentUserAccepted;
+    }
+
+    public void setCurrentUserAccepted(final Boolean currentUserAccepted) {
+        this.currentUserAccepted = currentUserAccepted;
     }
 
     @Override

@@ -1,6 +1,9 @@
 package android.otasyn.cardgames.activity;
 
 import android.otasyn.cardgames.R;
+import android.otasyn.cardgames.manage.account.asynctask.LatestActionTask;
+import android.otasyn.cardgames.manage.account.dto.Game;
+import android.otasyn.cardgames.manage.account.dto.GameAction;
 import android.otasyn.cardgames.scene.CardGameScene;
 import android.otasyn.cardgames.sprite.CardSprite;
 import android.otasyn.cardgames.utility.TextureUtility;
@@ -24,12 +27,43 @@ public abstract class CardGameActivity extends SimpleBaseGameActivity {
     private static int CAMERA_WIDTH = 720;
     private static int CAMERA_HEIGHT = 1280;
 
+    private Game game;
+    private GameAction latestAction;
+
     private ITextureRegion backgroundTextureRegion;
     private Map<Card,ITextureRegion> cardTextureRegions;
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void setGame(final Game game) {
+        this.game = game;
+    }
+
+    public GameAction getLatestAction() {
+        return latestAction;
+    }
+
+    public void setLatestAction(final GameAction latestAction) {
+        this.latestAction = latestAction;
+    }
 
     @Override
     public EngineOptions onCreateEngineOptions() {
         setTheme(R.style.GameBoardTheme);
+
+        game = getIntent().getParcelableExtra(GAME_INFO);
+        try {
+            latestAction = (new LatestActionTask()).execute(game).get();
+        } catch (Exception e) { }
+
+        if (latestAction == null) {
+            latestAction = new GameAction();
+            latestAction.setGame(game);
+            latestAction.setActionNumber(-1);
+        }
+
         final Camera camera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
         return new EngineOptions(true, ScreenOrientation.PORTRAIT_FIXED,
                 new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), camera);

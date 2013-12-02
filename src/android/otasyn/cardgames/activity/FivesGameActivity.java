@@ -1,15 +1,12 @@
 package android.otasyn.cardgames.activity;
 
-import android.otasyn.cardgames.manage.account.dto.Game;
 import android.otasyn.cardgames.scene.CardGameScene;
 
 public class FivesGameActivity extends CardGameActivity {
 
-    private Game game;
-
     @Override
     protected void onCreateCardGameResources() {
-        game = getIntent().getParcelableExtra(GAME_INFO);
+
     }
 
     @Override
