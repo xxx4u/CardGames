@@ -121,31 +121,25 @@ public class FreestyleGameActivity extends CardGameActivity {
                 }
             }
         }
-        try {
-            setLatestAction((new MoveTask()).execute(
-                    getGame().getId().toString(),
-                    JsonStringFormatterUtility.formatFreestyleState((FreestyleState)getLatestAction().getGameState()))
-                    .get());
-        } catch (Exception e) { }
+        move();
         displayDeck();
         displayHands();
     }
 
     private void drawClick(final AlertDialog dialog) {
         dialog.dismiss();
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(FreestyleGameActivity.this);
-        alertBuilder
-                .setTitle("Draw")
-                .setMessage("You have clicked the draw option.")
-                .setCancelable(true)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(final DialogInterface dialog, final int which) {
-                        dialog.dismiss();
-                    }
-                })
-                .create()
-                .show();
+        draw();
+    }
+
+    private void draw() {
+        if (getLatestAction().getGameState() != null) {
+            Card card = getLatestAction().getGameState().getDeck().poll();
+            GamePlayer player = getGame().getPlayerMap().get(getCurrentUser().getId());
+            getLatestAction().getGameState().getHands().get(player).add(card);
+        }
+        move();
+        displayDeck();
+        displayHands();
     }
 
     private void displayDeck() {
@@ -205,5 +199,14 @@ public class FreestyleGameActivity extends CardGameActivity {
                 }
             }
         }
+    }
+
+    private void move() {
+        try {
+            setLatestAction((new MoveTask()).execute(
+                    getGame().getId().toString(),
+                    JsonStringFormatterUtility.formatFreestyleState((FreestyleState) getLatestAction().getGameState()))
+                    .get());
+        } catch (Exception e) { }
     }
 }
