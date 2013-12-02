@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.otasyn.cardgames.R;
 import android.otasyn.cardgames.manage.account.asynctask.MoveTask;
+import android.otasyn.cardgames.manage.account.asynctask.TurnTask;
 import android.otasyn.cardgames.manage.account.dto.GamePlayer;
 import android.otasyn.cardgames.manage.account.dto.gamestate.FreestyleState;
 import android.otasyn.cardgames.manage.account.dto.gamestate.format.JsonStringFormatterUtility;
@@ -76,6 +77,41 @@ public class FreestyleGameActivity extends CardGameActivity {
         }
     }
 
+    @Override
+    protected void onGameMenuClick(final ButtonSprite pButtonSprite,
+                                   final float pTouchAreaLocalX, final float pTouchAreaLocalY) {
+        FreestyleGameActivity.this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                AlertDialog.Builder alertBuilder = new AlertDialog.Builder(FreestyleGameActivity.this);
+                LayoutInflater inflater = FreestyleGameActivity.this.getLayoutInflater();
+                final AlertDialog dialog = alertBuilder
+                        .setView(inflater.inflate(R.layout.popup_game_menu, null))
+                        .setCancelable(true)
+                        .setNeutralButton("Close", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(final DialogInterface dialog, final int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .create();
+                dialog.show();
+                Button gameMenuEndTurnButton = (Button) dialog.findViewById(R.id.gameMenuEndTurnButton);
+                gameMenuEndTurnButton.setOnClickListener(new Button.OnClickListener() {
+                    @Override
+                    public void onClick(final View v) {
+                        endTurnClick(dialog);
+                    }
+                });
+            }
+        });
+    }
+
+    private void endTurnClick(final AlertDialog dialog) {
+        dialog.dismiss();
+        turn();
+    }
+
     private void dealClick(final AlertDialog deckDialog) {
         deckDialog.dismiss();
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(FreestyleGameActivity.this);
@@ -122,8 +158,6 @@ public class FreestyleGameActivity extends CardGameActivity {
             }
         }
         move();
-        displayDeck();
-        displayHands();
     }
 
     private void drawClick(final AlertDialog dialog) {
@@ -138,8 +172,6 @@ public class FreestyleGameActivity extends CardGameActivity {
             getLatestAction().getGameState().getHands().get(player).add(card);
         }
         move();
-        displayDeck();
-        displayHands();
     }
 
     private void displayDeck() {
@@ -169,32 +201,38 @@ public class FreestyleGameActivity extends CardGameActivity {
         if (getLatestAction() != null
                 && getLatestAction().getGameState() != null
                 && getLatestAction().getGameState().getHands() != null) {
+            int startX = 130;
+            int incX = 20;
             Map<GamePlayer,List<Card>> hands = getLatestAction().getGameState().getHands();
             for (Map.Entry<GamePlayer,List<Card>> handEntry : hands.entrySet()) {
                 GamePlayer handPlayer = handEntry.getKey();
                 List<Card> hand = handEntry.getValue();
 
-                float sectionWidth = CAMERA_WIDTH / (hand.size() + 1);
-
                 if (getCurrentUser().equals(handPlayer)) {
-                    for (int n = 0; n < hand.size(); n++) {
-                        CardSprite cardSprite = getCardSprite(hand.get(n));
-                        float x = (sectionWidth * (n + 1)) - (cardSprite.getWidth() / 2f);
-                        float y = CAMERA_HEIGHT - cardSprite.getHeight();
-                        cardSprite.setX(x);
-                        cardSprite.setY(y);
-                        cardSprite.showFace();
-                        cardSprite.setVisible(true);
+                    int x = startX;
+                    for (Card card : Card.values()) {
+                        if (hand.contains(card)) {
+                            CardSprite cardSprite = getCardSprite(card);
+                            float y = CAMERA_HEIGHT - cardSprite.getHeight();
+                            cardSprite.setX(x);
+                            cardSprite.setY(y);
+                            cardSprite.showFace();
+                            cardSprite.setVisible(true);
+                            getCardGameScene().moveCardSpriteToFront(cardSprite);
+                            x += incX;
+                        }
                     }
                 } else {
+                    int x = CAMERA_WIDTH - startX;
                     for (int n = 0; n < hand.size(); n++) {
                         CardSprite cardSprite = getCardSprite(hand.get(n));
-                        float x = (sectionWidth * (n + 1)) - (cardSprite.getWidth() / 2f);
                         float y = 0;
                         cardSprite.setX(x);
                         cardSprite.setY(y);
                         cardSprite.showBack();
                         cardSprite.setVisible(true);
+                        getCardGameScene().moveCardSpriteToFront(cardSprite);
+                        x -= incX;
                     }
                 }
             }
@@ -208,5 +246,18 @@ public class FreestyleGameActivity extends CardGameActivity {
                     JsonStringFormatterUtility.formatFreestyleState((FreestyleState) getLatestAction().getGameState()))
                     .get());
         } catch (Exception e) { }
+        displayDeck();
+        displayHands();
+    }
+
+    private void turn() {
+        try {
+            setLatestAction((new TurnTask()).execute(
+                    getGame().getId().toString(),
+                    JsonStringFormatterUtility.formatFreestyleState((FreestyleState) getLatestAction().getGameState()))
+                    .get());
+        } catch (Exception e) { }
+        displayDeck();
+        displayHands();
     }
 }

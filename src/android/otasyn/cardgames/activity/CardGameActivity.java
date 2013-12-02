@@ -15,6 +15,7 @@ import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.SpriteBackground;
+import org.andengine.entity.sprite.ButtonSprite;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
@@ -35,9 +36,12 @@ public abstract class CardGameActivity extends SimpleBaseGameActivity {
     private GameAction latestAction;
 
     private ITextureRegion backgroundTextureRegion;
+    private ITextureRegion[] gameMenuButtonRegion;
     private Map<Card,ITextureRegion> cardTextureRegions;
     private Map<Card,CardSprite> cardSpritesMap = new HashMap<Card, CardSprite>();
     private ITextureRegion redBack;
+
+    private ButtonSprite gameMenuButton;
 
     private CardGameScene cardGameScene;
 
@@ -89,6 +93,7 @@ public abstract class CardGameActivity extends SimpleBaseGameActivity {
     @Override
     final protected void onCreateResources() {
         this.backgroundTextureRegion = TextureUtility.loadBackground(this, CAMERA_WIDTH, CAMERA_HEIGHT);
+        gameMenuButtonRegion = TextureUtility.loadGameMenuButton(this);
         onCreateCardGameResources();
     }
 
@@ -117,6 +122,17 @@ public abstract class CardGameActivity extends SimpleBaseGameActivity {
         final Sprite bgSprite = new Sprite(0, 0, this.backgroundTextureRegion, this.getVertexBufferObjectManager());
         cardGameScene.setBackground(new SpriteBackground(bgSprite));
 
+        float x = 10;
+        float y = CAMERA_HEIGHT - (gameMenuButtonRegion[TextureUtility.BUTTON_STATE_DOWN].getHeight() + 10);
+        gameMenuButton = new ButtonSprite(
+                x, y,
+                gameMenuButtonRegion[TextureUtility.BUTTON_STATE_UP],
+                gameMenuButtonRegion[TextureUtility.BUTTON_STATE_DOWN],
+                this.getVertexBufferObjectManager());
+        gameMenuButton.setOnClickListener(new GameMenuClickListener());
+        cardGameScene.attachChild(gameMenuButton);
+        cardGameScene.registerTouchArea(gameMenuButton);
+
         redBack = getCardTextureRegions().get(Card.BACK_RED);
 
         onCreateCardGameScene(cardGameScene);
@@ -140,6 +156,16 @@ public abstract class CardGameActivity extends SimpleBaseGameActivity {
         }
         return cardSprite;
     }
+
+    private class GameMenuClickListener implements ButtonSprite.OnClickListener {
+        @Override
+        public void onClick(final ButtonSprite pButtonSprite,
+                            final float pTouchAreaLocalX, final float pTouchAreaLocalY) {
+            onGameMenuClick(pButtonSprite, pTouchAreaLocalX, pTouchAreaLocalY);
+        }
+    }
+
+    protected void onGameMenuClick(ButtonSprite pButtonSprite,float pTouchAreaLocalX, float pTouchAreaLocalY) { }
 
     protected void loadCardSprites(final CardGameScene scene,
                                    final int xMod, final int xSlightMod,

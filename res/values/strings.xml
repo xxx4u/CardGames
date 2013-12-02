@@ -46,4 +46,6 @@
     <string name="deckOptionsDrawButton">Draw</string>
     <string name="dealHeader">How many cards will you deal to each person?</string>
 
+    <string name="gameMenuHeader">Game Menu</string><string name="gameMenuEndTurn">End Turn</string>
+
 </resources>

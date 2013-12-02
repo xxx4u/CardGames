@@ -603,4 +603,29 @@ public class TextureUtility {
         }
         return null;
     }
+
+    public static ITextureRegion[] loadGameMenuButton(final BaseGameActivity baseGameActivity) {
+        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/buttons/");
+        // Width and height have to be powers of 2 or this won't work.
+        BuildableBitmapTextureAtlas buttonTextureAtlas = new BuildableBitmapTextureAtlas(
+                baseGameActivity.getTextureManager(), 128, 256, TextureOptions.NEAREST);
+
+        ITextureRegion gameMenuUpButtonRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
+                buttonTextureAtlas, baseGameActivity, "game-menu-up.png");
+        ITextureRegion gameMenuDownButtonRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
+                buttonTextureAtlas, baseGameActivity, "game-menu-down.png");
+
+        try {
+            buttonTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 1));
+            buttonTextureAtlas.load();
+
+            ITextureRegion[] textureRegions = new ITextureRegion[3];
+            textureRegions[BUTTON_STATE_UP] = gameMenuUpButtonRegion;
+            textureRegions[BUTTON_STATE_DOWN] = gameMenuDownButtonRegion;
+            return textureRegions;
+        } catch (ITextureAtlasBuilder.TextureAtlasBuilderException e) {
+            Debug.e(e);
+        }
+        return null;
+    }
 }
