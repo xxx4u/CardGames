@@ -241,15 +241,17 @@ public class FreestyleGameActivity extends CardGameActivity {
                     }
                 } else {
                     int x = CAMERA_WIDTH - startX;
-                    for (int n = 0; n < hand.size(); n++) {
-                        CardSprite cardSprite = getCardSprite(hand.get(n));
-                        float y = 0;
-                        cardSprite.setX(x);
-                        cardSprite.setY(y);
-                        cardSprite.showBack();
-                        cardSprite.setVisible(true);
-                        getCardGameScene().moveCardSpriteToFront(cardSprite);
-                        x -= incX;
+                    for (Card card : Card.values()) {
+                        if (hand.contains(card)) {
+                            CardSprite cardSprite = getCardSprite(card);
+                            float y = 0;
+                            cardSprite.setX(x);
+                            cardSprite.setY(y);
+                            cardSprite.showBack();
+                            cardSprite.setVisible(true);
+                            getCardGameScene().moveCardSpriteToFront(cardSprite);
+                            x -= incX;
+                        }
                     }
                 }
             }
