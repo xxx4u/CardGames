@@ -41,4 +41,9 @@
 
     <string name="titleActivityGame">GameActivity</string>
 
+    <string name="deckOptionsHeader">Deck Options</string>
+    <string name="deckOptionsDealButton">Deal</string>
+    <string name="deckOptionsDrawButton">Draw</string>
+    <string name="dealHeader">How many cards will you deal to each person?</string>
+
 </resources>

@@ -24,8 +24,8 @@ public abstract class CardGameActivity extends SimpleBaseGameActivity {
 
     public static final String GAME_INFO = "game_info";
 
-    private static int CAMERA_WIDTH = 720;
-    private static int CAMERA_HEIGHT = 1280;
+    protected static int CAMERA_WIDTH = 720;
+    protected static int CAMERA_HEIGHT = 1280;
 
     private Game game;
     private GameAction latestAction;

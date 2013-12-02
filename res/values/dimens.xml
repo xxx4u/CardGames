@@ -17,4 +17,7 @@
     <dimen name="awaitingConfirmationLeftRightPadding">4dp</dimen>
     <dimen name="awaitingConfirmationTopBottomPadding">0dp</dimen>
 
+    <dimen name="deckOptionsHeaderPadding">5dip</dimen>
+    <dimen name="dealHeaderMargin">5dip</dimen>
+
 </resources>
