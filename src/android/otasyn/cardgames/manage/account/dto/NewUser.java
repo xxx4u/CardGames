@@ -5,7 +5,12 @@
  */
 package android.otasyn.cardgames.manage.account.dto;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 public class NewUser extends SimpleUser {
+
+    private String password;
 
     public NewUser() { }
 
@@ -18,7 +23,28 @@ public class NewUser extends SimpleUser {
         setPassword(password);
     }
 
-    private String password;
+    public NewUser(final Parcel in) {
+        super(in);
+        password = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(final Parcel dest, final int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeString(password);
+    }
+
+    public static final Parcelable.Creator<NewUser> CREATOR = new Parcelable.Creator<NewUser>() {
+        @Override
+        public NewUser createFromParcel(final Parcel source) {
+            return new NewUser(source);
+        }
+
+        @Override
+        public NewUser[] newArray(final int size) {
+            return new NewUser[size];
+        }
+    };
 
     public String getPassword() {
         return password;

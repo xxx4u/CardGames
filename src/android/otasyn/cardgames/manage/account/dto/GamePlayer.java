@@ -5,7 +5,10 @@
  */
 package android.otasyn.cardgames.manage.account.dto;
 
-public class GamePlayer extends SimpleUser {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class GamePlayer extends SimpleUser implements Parcelable {
 
     private Game game;
     private Boolean accepted;
@@ -26,6 +29,31 @@ public class GamePlayer extends SimpleUser {
         this.game = game;
         this.accepted = accepted;
     }
+
+    public GamePlayer(final Parcel in) {
+        super(in);
+        game = in.readParcelable(Game.class.getClassLoader());
+        accepted = in.readByte() != 0;
+    }
+
+    @Override
+    public void writeToParcel(final Parcel dest, final int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeParcelable(game, flags);
+        dest.writeByte((byte) (Boolean.TRUE.equals(accepted) ? 1 : 0));
+    }
+
+    public static final Parcelable.Creator<GamePlayer> CREATOR = new Parcelable.Creator<GamePlayer>() {
+        @Override
+        public GamePlayer createFromParcel(final Parcel source) {
+            return new GamePlayer(source);
+        }
+
+        @Override
+        public GamePlayer[] newArray(final int size) {
+            return new GamePlayer[size];
+        }
+    };
 
     public Game getGame() {
         return game;

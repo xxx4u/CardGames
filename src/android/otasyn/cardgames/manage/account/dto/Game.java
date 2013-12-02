@@ -5,15 +5,17 @@
  */
 package android.otasyn.cardgames.manage.account.dto;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.otasyn.cardgames.manage.account.enumeration.GameType;
 
-import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-public class Game implements Serializable {
+public class Game implements Parcelable {
 
     private Integer id;
     private Boolean currentUserIsOwner;
@@ -28,6 +30,46 @@ public class Game implements Serializable {
 
     public Game(final Integer id) {
         this.id = id;
+    }
+
+    public Game(final Parcel in) {
+        id = in.readInt();
+        currentUserIsOwner = in.readByte() != 0;
+        owner = in.readParcelable(SimpleUser.class.getClassLoader());
+        gameType = GameType.findGameType(in.readInt());
+        uuid = UUID.fromString(in.readString());
+        started = in.readByte() != 0;
+        dateAdded = new Date(in.readLong());
+        players = new HashSet<GamePlayer>(Arrays.asList(in.createTypedArray(GamePlayer.CREATOR)));
+    }
+
+    @Override
+    public void writeToParcel(final Parcel dest, final int flags) {
+        dest.writeInt(id);
+        dest.writeByte((byte) (Boolean.TRUE.equals(currentUserIsOwner) ? 1 : 0));
+        dest.writeParcelable(owner, flags);
+        dest.writeInt(gameType.getId());
+        dest.writeString(uuid.toString());
+        dest.writeByte((byte) (Boolean.TRUE.equals(started) ? 1 : 0));
+        dest.writeLong(dateAdded.getTime());
+        dest.writeTypedArray(players.toArray(new GamePlayer[players.size()]), flags);
+    }
+
+    public static final Parcelable.Creator<Game> CREATOR = new Parcelable.Creator<Game>() {
+        @Override
+        public Game createFromParcel(final Parcel source) {
+            return new Game(source);
+        }
+
+        @Override
+        public Game[] newArray(final int size) {
+            return new Game[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public Integer getId() {

@@ -12,6 +12,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.otasyn.cardgames.R;
+import android.otasyn.cardgames.activity.CardGameActivity;
+import android.otasyn.cardgames.activity.FivesGameActivity;
+import android.otasyn.cardgames.activity.FreestyleGameActivity;
 import android.otasyn.cardgames.manage.account.activity.widget.GameRow;
 import android.otasyn.cardgames.manage.account.asynctask.AcceptGameTask;
 import android.otasyn.cardgames.manage.account.asynctask.CurrentUserTask;
@@ -73,20 +76,35 @@ public class GamesListActivity extends Activity {
         }
     }
 
-    private void playGame() {
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(GamesListActivity.this);
-        alertBuilder
-                .setTitle("Start Game")
-                .setMessage("Start Game")
-                .setCancelable(true)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(final DialogInterface dialog, final int which) {
-                        dialog.dismiss();
-                    }
-                })
-                .create()
-                .show();
+    private void playGame(final Game game) {
+        Intent gameIntent = null;
+        switch (game.getGameType()) {
+            case FREESTYLE:
+                gameIntent = new Intent(GamesListActivity.this, FreestyleGameActivity.class);
+                gameIntent.putExtra(CardGameActivity.GAME_INFO, game);
+                break;
+            case FIVES:
+                gameIntent = new Intent(GamesListActivity.this, FivesGameActivity.class);
+                gameIntent.putExtra(CardGameActivity.GAME_INFO, game);
+                break;
+            default:
+                AlertDialog.Builder alertBuilder = new AlertDialog.Builder(GamesListActivity.this);
+                alertBuilder
+                        .setTitle("Game Type Not Supported")
+                        .setMessage("This game type is not supported on this device.")
+                        .setCancelable(true)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(final DialogInterface dialog, final int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .create()
+                        .show();
+        }
+        if (gameIntent != null) {
+            GamesListActivity.this.startActivity(gameIntent);
+        }
     }
 
     private void askToAccept(final Game game, final GameRow gameRow) {
@@ -145,7 +163,7 @@ public class GamesListActivity extends Activity {
         public void onClick(final GameRow gameRow, final Game game, final SimpleUser currentUser) {
             if (game != null) {
                 if (Boolean.TRUE.equals(game.getStarted())) {
-                    playGame();
+                    playGame(game);
                 } else {
                     Iterator<GamePlayer> iter;
                     GamePlayer currentPlayer = null;

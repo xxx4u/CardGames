@@ -43,6 +43,8 @@
         <activity android:name=".Cards184x256Activity"/>
         <activity android:name=".CardsFullSizeActivity"/>
         <activity android:name=".DemosActivity"/>
+        <activity android:name=".activity.FreestyleGameActivity"/>
+        <activity android:name=".activity.FivesGameActivity"/>
     </application>
 
 </manifest>

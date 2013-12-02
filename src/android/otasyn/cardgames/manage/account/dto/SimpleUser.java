@@ -5,9 +5,10 @@
  */
 package android.otasyn.cardgames.manage.account.dto;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class SimpleUser implements Serializable {
+public class SimpleUser implements Parcelable {
 
     private Integer id;
     private String firstname;
@@ -27,6 +28,40 @@ public class SimpleUser implements Serializable {
         this.firstname = user.getFirstname();
         this.lastname = user.getLastname();
         this.enabled = user.getEnabled();
+    }
+
+    public SimpleUser(final Parcel in) {
+        id = in.readInt();
+        firstname = in.readString();
+        lastname = in.readString();
+        email = in.readString();
+        enabled = in.readByte() != 0;
+    }
+
+    @Override
+    public void writeToParcel(final Parcel dest, final int flags) {
+        dest.writeInt(id);
+        dest.writeString(firstname);
+        dest.writeString(lastname);
+        dest.writeString(email);
+        dest.writeByte((byte) (enabled ? 1 : 0));
+    }
+
+    public static final Parcelable.Creator<SimpleUser> CREATOR = new Parcelable.Creator<SimpleUser>() {
+        @Override
+        public SimpleUser createFromParcel(final Parcel source) {
+            return new SimpleUser(source);
+        }
+
+        @Override
+        public SimpleUser[] newArray(final int size) {
+            return new SimpleUser[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public Integer getId() {
