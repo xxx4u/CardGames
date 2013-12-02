@@ -25,6 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -311,17 +312,19 @@ public class JsonResponseParserUtility {
 
     private static void populateHands(final GameState gameState, final JSONObject jsonHands, final Game game) {
         if (jsonHands != null) {
-            Map<GamePlayer,List<Card>> hands = new HashMap<GamePlayer, List<Card>>();
-            for (Map.Entry<Integer,GamePlayer> playerEntry : game.getPlayerMap().entrySet()) {
-                JSONArray jsonHand = jsonHands.optJSONArray(playerEntry.getKey().toString());
+            Map<GamePlayer,List<Card>> hands = new HashMap<GamePlayer, List<Card>>(jsonHands.length());
+            Iterator<String> iterator;
+            for (iterator = jsonHands.keys(); iterator.hasNext();) {
+                String key = iterator.next();
+                JSONArray jsonHand = jsonHands.optJSONArray(key);
                 if (jsonHand == null) {
-                    hands.put(playerEntry.getValue(), new ArrayList<Card>(0));
+                    hands.put(new GamePlayer(Integer.valueOf(key), game), new ArrayList<Card>(0));
                 } else {
                     List<Card> hand = new ArrayList<Card>(jsonHand.length());
                     for (int n = 0; n < jsonHand.length(); n++) {
                         hand.add(Card.findCard(jsonHand.optInt(n, -1)));
                     }
-                    hands.put(playerEntry.getValue(), hand);
+                    hands.put(new GamePlayer(Integer.valueOf(key), game), hand);
                 }
             }
             gameState.setHands(hands);

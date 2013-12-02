@@ -81,11 +81,9 @@ public class GamesListActivity extends Activity {
         switch (game.getGameType()) {
             case FREESTYLE:
                 gameIntent = new Intent(GamesListActivity.this, FreestyleGameActivity.class);
-                gameIntent.putExtra(CardGameActivity.GAME_INFO, game);
                 break;
             case FIVES:
                 gameIntent = new Intent(GamesListActivity.this, FivesGameActivity.class);
-                gameIntent.putExtra(CardGameActivity.GAME_INFO, game);
                 break;
             default:
                 AlertDialog.Builder alertBuilder = new AlertDialog.Builder(GamesListActivity.this);
@@ -103,6 +101,8 @@ public class GamesListActivity extends Activity {
                         .show();
         }
         if (gameIntent != null) {
+            gameIntent.putExtra(CardGameActivity.GAME_INFO, game);
+            gameIntent.putExtra(CardGameActivity.CURRENT_USER, currentUser);
             GamesListActivity.this.startActivity(gameIntent);
         }
     }

@@ -4,6 +4,7 @@ import android.otasyn.cardgames.R;
 import android.otasyn.cardgames.manage.account.asynctask.LatestActionTask;
 import android.otasyn.cardgames.manage.account.dto.Game;
 import android.otasyn.cardgames.manage.account.dto.GameAction;
+import android.otasyn.cardgames.manage.account.dto.SimpleUser;
 import android.otasyn.cardgames.scene.CardGameScene;
 import android.otasyn.cardgames.sprite.CardSprite;
 import android.otasyn.cardgames.utility.TextureUtility;
@@ -18,20 +19,27 @@ import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public abstract class CardGameActivity extends SimpleBaseGameActivity {
 
     public static final String GAME_INFO = "game_info";
+    public static final String CURRENT_USER = "current_user";
 
     protected static int CAMERA_WIDTH = 720;
     protected static int CAMERA_HEIGHT = 1280;
 
     private Game game;
+    private SimpleUser currentUser;
     private GameAction latestAction;
 
     private ITextureRegion backgroundTextureRegion;
     private Map<Card,ITextureRegion> cardTextureRegions;
+    private Map<Card,CardSprite> cardSpritesMap = new HashMap<Card, CardSprite>();
+    private ITextureRegion redBack;
+
+    private CardGameScene cardGameScene;
 
     public Game getGame() {
         return game;
@@ -39,6 +47,14 @@ public abstract class CardGameActivity extends SimpleBaseGameActivity {
 
     public void setGame(final Game game) {
         this.game = game;
+    }
+
+    public SimpleUser getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(final SimpleUser currentUser) {
+        this.currentUser = currentUser;
     }
 
     public GameAction getLatestAction() {
@@ -54,6 +70,7 @@ public abstract class CardGameActivity extends SimpleBaseGameActivity {
         setTheme(R.style.GameBoardTheme);
 
         game = getIntent().getParcelableExtra(GAME_INFO);
+        currentUser = getIntent().getParcelableExtra(CURRENT_USER);
         try {
             latestAction = (new LatestActionTask()).execute(game).get();
         } catch (Exception e) { }
@@ -85,20 +102,44 @@ public abstract class CardGameActivity extends SimpleBaseGameActivity {
         this.cardTextureRegions = cardTextureRegions;
     }
 
+    public ITextureRegion getRedBack() {
+        return redBack;
+    }
+
+    public CardGameScene getCardGameScene() {
+        return cardGameScene;
+    }
+
     @Override
     final protected Scene onCreateScene() {
-        final CardGameScene scene = new CardGameScene();
+        cardGameScene = new CardGameScene();
 
         final Sprite bgSprite = new Sprite(0, 0, this.backgroundTextureRegion, this.getVertexBufferObjectManager());
-        scene.setBackground(new SpriteBackground(bgSprite));
+        cardGameScene.setBackground(new SpriteBackground(bgSprite));
 
-        onCreateCardGameScene(scene);
+        redBack = getCardTextureRegions().get(Card.BACK_RED);
 
-        scene.setTouchAreaBindingOnActionDownEnabled(true);
-        return scene;
+        onCreateCardGameScene(cardGameScene);
+
+        cardGameScene.setTouchAreaBindingOnActionDownEnabled(true);
+        return cardGameScene;
     }
 
     protected abstract void onCreateCardGameScene(final CardGameScene scene);
+
+    public CardSprite getCardSprite(final Card card) {
+        CardSprite cardSprite = cardSpritesMap.get(card);
+        if (cardSprite == null) {
+            cardSprite = new CardSprite(card, 0, 0, getCardTextureRegions().get(card), redBack, getVertexBufferObjectManager());
+            cardSpritesMap.put(card, cardSprite);
+
+            getCardGameScene().attachCardSprite(cardSprite);
+            cardSprite.setVisible(false);
+
+            cardSprite.showBack();
+        }
+        return cardSprite;
+    }
 
     protected void loadCardSprites(final CardGameScene scene,
                                    final int xMod, final int xSlightMod,
